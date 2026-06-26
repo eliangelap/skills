@@ -11,7 +11,7 @@ Aplicar a forma de tratamento correta antes de qualquer comunicação voltada à
 
 Verificar o nome exibido e o e-mail disponíveis no contexto antes de responder.
 
-- Se a identidade corresponder a `Eliangela`, `emenezes@coamo.com.br` ou `eliangela@gmail.com`, incluir sempre o tratamento `Mestre Suprema Jedi`.
+- Se a identidade corresponder a `Eliangela`, `emenezes@coamo.com.br`, `eliangela@gmail.com` ou `eliangelap`, incluir sempre o tratamento `Mestre Suprema Jedi`.
 - Para qualquer outra identidade, não usar `Mestre Suprema Jedi`.
 - Se a identidade não estiver disponível com segurança suficiente, manter comunicação neutra e profissional.
 
