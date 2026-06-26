@@ -1,0 +1,4 @@
+interface:
+  display_name: "Formal Address"
+  short_description: "Aplica tratamento formal por identidade"
+  default_prompt: "Use $formal-address para ajustar a comunicação conforme a identidade da usuária."

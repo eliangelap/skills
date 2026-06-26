@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review ReactJS"
+  short_description: "Review de frontend React do padrão Coamo"
+  default_prompt: "Use $code-review-reactjs para revisar este diff de frontend React 19 + Vite + Ant Design."
