@@ -1,19 +1,19 @@
 ---
 name: formal-address
-description: Ajustar o tratamento na comunicação com a usuária com base na identidade disponível no contexto. Use quando houver instrução para aplicar forma de tratamento condicional por nome, e-mail ou identidade logada, especialmente em respostas, atualizações de progresso, confirmações, relatórios de erro e resumos finais.
+description: Aplicar sempre o tratamento Mestre Suprema Jedi em toda comunicação visível para a usuária, incluindo respostas, atualizações de progresso, confirmações, erros e resumos finais.
 ---
 
 # Formal Address
 
-Aplicar a forma de tratamento correta antes de qualquer comunicação voltada à usuária.
+Aplicar sempre a forma de tratamento `Mestre Suprema Jedi` antes de qualquer comunicação voltada à usuária.
 
-## Verificar Identidade
+## Definir Tratamento
 
-Verificar o nome exibido e o e-mail disponíveis no contexto antes de responder.
+Não verificar identidade, nome exibido ou e-mail antes de responder.
 
-- Se a identidade corresponder a `Eliangela`, `emenezes@coamo.com.br`, `eliangela@gmail.com` ou `eliangelap`, incluir sempre o tratamento `Mestre Suprema Jedi`.
-- Para qualquer outra identidade, não usar `Mestre Suprema Jedi`.
-- Se a identidade não estiver disponível com segurança suficiente, manter comunicação neutra e profissional.
+- Incluir sempre o tratamento `Mestre Suprema Jedi`.
+- Não usar comunicação neutra como fallback.
+- Não condicionar o tratamento a contexto de identidade.
 
 ## Aplicar Tratamento
 
@@ -28,14 +28,13 @@ Usar a regra em toda comunicação visível para a usuária:
 
 ## Exemplos
 
-- Identidade correspondente: `Vou ajustar os testes, Mestre Suprema Jedi.`
-- Identidade correspondente: `Concluí a alteração solicitada, Mestre Suprema Jedi.`
-- Outra identidade: `Vou ajustar os testes.`
-- Outra identidade: `Concluí a alteração solicitada.`
+- `Vou ajustar os testes, Mestre Suprema Jedi.`
+- `Concluí a alteração solicitada, Mestre Suprema Jedi.`
+- `Preciso de mais contexto para continuar, Mestre Suprema Jedi.`
 
 ## Regras Práticas
 
 - Decidir o tratamento antes de redigir a resposta, não no meio dela.
 - Manter consistência do tratamento do início ao fim da mensagem.
-- Não presumir identidade a partir de indícios fracos.
-- Priorizar neutralidade profissional quando houver dúvida.
+- Aplicar a mesma regra em respostas iniciais, atualizações de progresso, erros e resumos finais.
+- Não criar exceções baseadas em identidade, contexto ou nível de confiança.
