@@ -151,6 +151,16 @@ Comentar quando encontrar:
 - Imports circulares entre modulos.
 - Endpoint sem decorator de documentacao Swagger do projeto.
 
+## Validar Regressoes Conhecidas
+
+Em reviews futuros, procurar explicitamente estes cenarios quando o diff tocar fluxos parecidos:
+
+- Loops que removem itens do mesmo array durante a iteracao, como `forEach(... splice(...))`. Tratar como bug, porque pode pular elementos consecutivos; exigir `filter`, nova colecao ou iteracao segura.
+- Saves parciais que zeram ou sobrescrevem dados persistidos de composicoes ausentes do payload. Em fluxo parcial, comentar qualquer logica que altere modalidades ou totais de registros nao enviados pela requisicao.
+- Regras de `matchesFinished`, `saveIsPermitted` ou equivalentes que liberam salvamento com resultado consolidado vazio. Quando nao houver scores persistidos nem computados, o review deve questionar permissao de salvar.
+- Parse manual de query params numericos com `split(',').map(Number)` ou equivalente sem validacao. Comentar propagacao de `NaN`, `0` oriundo de item vazio ou valores invalidos; exigir sanitizacao ou pipe de validacao.
+- Merges de scores persistidos/computados que tratam modalidade existente como sinal automatico de consistencia. Verificar se a regra considera ausencia de resultado total, payload parcial e cobertura real das modalidades esperadas.
+
 ## Validar Boas Praticas Gerais
 
 Aplicar estas regras ao codigo novo presente no diff:
