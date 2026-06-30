@@ -125,6 +125,36 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 - Modal ou notification global instanciado em vários lugares.
 - Imports circulares.
 
+## Estados transitórios e reatividade em React/Antd
+
+Apontar no diff problemas que gerem UI inconsistente, recarga desnecessária ou
+estado derivado stale, especialmente em filtros, tabelas e formulários.
+
+- `useCallback` ou `useMemo` dependente de objeto inteiro (`filter`, `params`,
+  `options`, etc.) quando o código usa apenas alguns campos específicos:
+  comentar e sugerir dependências granulares. Isso evita reruns por identidade
+  nova sem mudança semântica.
+- Não marcar como problema um suposto “duplo disparo” apenas por haver valor
+  derivado e objeto-base juntos nas deps. O problema real a apontar é
+  dependência ampla demais, não duplicidade automática de `useEffect`.
+- `useMemo` ou `useCallback` lendo `form.getFieldsValue()`, `form.getFieldValue()`
+  ou APIs imperativas equivalentes do Ant Design como base para estado derivado:
+  comentar quando isso for usado sem uma fonte reativa como `Form.useWatch`,
+  porque `form` é estável e o cálculo pode ficar stale.
+- Campos obrigatórios, habilitação de botão, mensagens de validação ou visões
+  condicionais não devem depender de leitura imperativa do formulário durante
+  render sem watch explícito.
+- Fluxos com `syncFiltersWithUrl`, auto-search, carga inicial por query string
+  ou hidratação assíncrona não devem disparar busca antes de dados auxiliares
+  necessários estarem carregados (`availableModalityIds`, options de select,
+  catálogos, permissões, etc.). Se o payload inicial puder sair incompleto e
+  classificar a tela de forma errada, comentar.
+- Quando um booleano de modo de tela (`isFullSave`, `isPartialView`,
+  `canEdit`, etc.) depende de dados assíncronos e controla colunas, alertas ou
+  ações, verificar se existe risco de iniciar em estado incorreto por falta de
+  dados auxiliares. Apontar tanto “flash” visual quanto estado incorreto
+  persistente.
+
 ## Boas práticas gerais para código novo do diff
 
 Apontar toda violação encontrada em linhas novas ou alteradas.
