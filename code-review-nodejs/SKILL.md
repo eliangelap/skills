@@ -17,7 +17,8 @@ Revisar apenas o diff solicitado e priorizar bugs, regressoes, riscos e gaps de 
    - Para worktree review com alteracoes unstaged, usar `git diff HEAD`.
 2. Ler os arquivos afetados e o contexto suficiente para entender comportamento e impacto.
 3. Revisar corretude, regressao, riscos e cobertura de testes.
-4. Responder em Portugues do Brasil, salvo pedido explicito em outro idioma.
+4. Verificar se as regras de negocio novas ou alteradas sao coerentes entre si, com o fluxo existente e com os invariantes esperados do dominio.
+5. Responder em Portugues do Brasil, salvo pedido explicito em outro idioma.
 
 ## Aplicar Regras da API Coamo
 
@@ -89,6 +90,8 @@ Comentar quando houver:
 - Interfaces com prefixo `I`.
 - Enums com prefixo `E`.
 - Arquivos de use case em kebab-case e classe em PascalCase.
+- Verificar se nomes de classes, DTOs, gateways, services e use cases correspondem fielmente a funcionalidade real implementada.
+- Quando uma classe nova ou alterada tiver nome impreciso, generico ou enganoso para o comportamento presente no diff, comentar e sugerir um nome mais aderente.
 - Tabelas Oracle com prefixo `EGRU_`.
 - Colunas Oracle em UPPERCASE com underscore.
 
@@ -118,6 +121,7 @@ Nao apontar como erro os seguintes padroes idiomaticos de TypeORM usados no mape
 ## Validar Excecoes, Auth e Observabilidade
 
 - Vetar `throw new Error('...')` em producao quando houver excecoes de dominio apropriadas.
+- Verificar coerencia, clareza e padronizacao das mensagens de erro; comentar mensagens ambiguas, genericas, contraditorias com a regra de negocio ou desalinhadas com o contrato da API.
 - Exigir `@User()` em controller em vez de `req.user`.
 - Exigir `@RequirePermission(...)` em rotas protegidas.
 - Vetar parametro `executionId`; o contexto deve vir de `AsyncLocalStorage`.
@@ -148,6 +152,9 @@ Comentar quando encontrar:
 - Use case com `try/catch` que engole erro sem rethrow ou log estruturado.
 - Controller com logica de orquestracao fazendo tres ou mais chamadas a use cases.
 - Domain entity com metodo de negocio fazendo IO.
+- Consultas ao banco dentro de loop quando houver alternativa de carga em lote, prefetch, agregacao ou reestruturacao do fluxo.
+- Requisicoes HTTP dentro de loop quando houver alternativa de batch, paralelizacao controlada, cache ou reorganizacao da integracao.
+- Blocos com excesso de logica aninhada, especialmente muitos `if` dentro de `if`, quando early return, extracao de funcao ou tabela de decisao simplificariam o fluxo.
 - Imports circulares entre modulos.
 - Endpoint sem decorator de documentacao Swagger do projeto.
 
@@ -178,6 +185,7 @@ Aplicar estas regras ao codigo novo presente no diff:
 | 9 | `async` com tratamento explicito ou propagacao intencional; nunca `catch` vazio ou so com `console.log`; usar erros de dominio com `status` ou `code` | Apontar swallow de erro e `throw new Error` |
 | 10 | Respeitar Sonar: complexidade cognitiva <= 15, maximo de 5 parametros, evitar string literal repetida e remover variaveis mortas | Apontar funcoes novas com 6 ou mais parametros e repeticoes obvias |
 | 11 | Nao expor stack trace ao cliente; sanitizar input; secret/token via env; rota protegida valida auth/autz; sem `debug=true` ou logs verbosos em producao | Apontar credenciais hardcoded e falta de protecao |
+| 12 | Nao introduzir padroes com custo de performance evitavel em fluxos quentes, especialmente N+1, IO serial dentro de loop e recalculo redundante | Sugerir batching, joins, preload, cache, agregacao ou reorganizacao do fluxo |
 
 ## Validar Testes
 
