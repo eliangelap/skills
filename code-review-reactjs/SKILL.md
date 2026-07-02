@@ -121,6 +121,10 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 - Hook customizado fazendo IO direto com `fetch` ou `axios`.
 - Componente com mais de uma responsabilidade.
 - Use case lendo `import.meta.env` direto.
+- Método `async` ou função que retorna `Promise` chamado sem `await`, `return`,
+  `void` explícito, composição (`Promise.all`, `Promise.allSettled`, etc.) ou
+  tratamento equivalente no fluxo. Tratar isso como finding porque a execução
+  pode seguir com estado inconsistente, erro não observado ou corrida.
 - Use case com `try/catch` engolindo erro.
 - Modal ou notification global instanciado em vários lugares.
 - Imports circulares.
@@ -167,7 +171,7 @@ Apontar toda violação encontrada em linhas novas ou alteradas.
 6. Preferir `const` a `let`; nunca `var`; não reutilizar variável para papéis diferentes.
 7. Validar params no começo de funções exportadas; nunca ignorar retorno relevante de Promise.
 8. Sem `any`; sem `import * as` sem motivo; usar `import type` para tipos puros.
-9. `async` com tratamento explícito; nunca `catch` vazio ou só com `console.log`; preferir erro custom com `status` ou `code` quando houver padrão do projeto.
+9. `async` com tratamento explícito; nunca `catch` vazio ou só com `console.log`; preferir erro custom com `status` ou `code` quando houver padrão do projeto. Se uma chamada assíncrona nova do diff não estiver aguardada, retornada ou descartada de forma deliberada com `void`, apontar.
 10. Vigiar complexidade cognitiva, número excessivo de parâmetros, string literal repetida, código morto e não usado.
 11. Não expor stack ao cliente; sanitizar input; secret via env; rota protegida deve validar auth/autz; sem `debug=true` ou logs verbosos em produção.
 
