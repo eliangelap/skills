@@ -9,10 +9,11 @@ description: "Criar, editar, revisar e depurar scripts Windows Batch (.bat e .cm
 
 - Começar com `@echo off` e usar blocos e rótulos legíveis.
 - Delimitar atribuições com `set "NOME=valor"` e caminhos com aspas duplas.
+- Nomear todas as variáveis com termos descritivos em inglês, como `SOURCE_DIRECTORY`, `BACKUP_FILE` e `EXIT_CODE`; evitar nomes genéricos ou de uma letra, exceto contadores locais inevitáveis.
 - Aplicar `setlocal EnableExtensions DisableDelayedExpansion` no início. Ativar `EnableDelayedExpansion` apenas nos blocos que alteram e leem variáveis dentro de `FOR` ou `IF`.
 - Preservar texto de entrada que possa conter `!`: manter delayed expansion desligada ao capturá-lo e usar a técnica de alternância descrita em [referências de cmd.exe](references/cmd-patterns.md).
-- Capturar o resultado imediatamente após cada comando relevante: `comando` seguido de `set "RC=%ERRORLEVEL%"`. Testar `RC` antes de executar outro comando.
-- Usar `IF ERRORLEVEL n` somente em ordem decrescente. Preferir `if not "%RC%"=="0"` quando a intenção for testar falha genérica.
+- Capturar o resultado imediatamente após cada comando relevante: `comando` seguido de `set "EXIT_CODE=%ERRORLEVEL%"`. Testar `EXIT_CODE` antes de executar outro comando.
+- Usar `IF ERRORLEVEL n` somente em ordem decrescente. Preferir `if not "%EXIT_CODE%"=="0"` quando a intenção for testar falha genérica.
 - Validar argumentos, pré-condições, privilégios e caminhos antes de ações que alterem ou removam dados. Oferecer modo de simulação quando a operação for destrutiva ou em lote.
 - Redirecionar saída apenas quando ela não for necessária ao diagnóstico. Não ocultar mensagens de erro sem registrar uma alternativa útil.
 
