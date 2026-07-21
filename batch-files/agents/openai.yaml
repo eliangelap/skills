@@ -1,0 +1,4 @@
+interface:
+  display_name: "Windows Batch Specialist"
+  short_description: "Automação avançada com cmd.exe"
+  default_prompt: "Use $batch-files to create a robust Windows automation script."
