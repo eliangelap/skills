@@ -62,8 +62,13 @@ Use esta skill quando a tarefa envolver preparar, revisar, sugerir ou criar comm
 
 ## Regra Prática
 
-- Antes de qualquer commit, lembre a usuária de subir a versão do código com `yarn release:hotfix` ou `yarn release:minor`, quando o projeto usar esse fluxo de versionamento.
-- Quando a usuária pedir para criar o commit e a versão ainda não tiver sido atualizada no fluxo atual, avise explicitamente sobre esse passo antes de concluir o commit.
+- Antes de qualquer commit, pergunte obrigatoriamente: `Deseja alterar a versão antes do commit?`
+  1. Não
+  2. Alterar Patch
+  3. Alterar Minor
+  4. Alterar Major
+- Execute a release escolhida antes de preparar o commit: Patch com `yarn release:hotfix`, Minor com `yarn release:minor` e Major com `yarn release:major`.
+- Se a usuária escolher `Não`, siga diretamente com a revisão, stage e commit. Se escolher uma alteração de versão, revise novamente o estado do repositório e inclua no commit as alterações de versão pertinentes.
 - Antes de criar o commit, confira se a mensagem segue exatamente o padrão esperado pelo repositório para evitar falha em hooks como `commit-msg`.
 - Se estiver usando `yarn commit` ou ferramenta equivalente, preencha o tipo e o escopo conforme a convenção vigente no projeto.
 - Se houver contexto importante, preencha também o corpo da mensagem com uma descrição detalhada.
