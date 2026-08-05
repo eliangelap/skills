@@ -1,0 +1,4 @@
+interface:
+  display_name: "Desenvolvimento Node.js Coamo"
+  short_description: "Padrões Node.js para APIs Coamo"
+  default_prompt: "Use $nodejs-development-coamo para implementar esta demanda na API Node.js Coamo."
