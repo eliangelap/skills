@@ -10,10 +10,11 @@ Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspec
 ## Fluxo
 
 1. Delimite a camada e os efeitos da demanda: domínio, aplicação, infraestrutura, HTTP, worker, orquestração, dados ou configuração.
-2. Use `src/@core/modules/modality` como primeira referência de convenções, substituindo-a por um módulo mais próximo quando houver.
-3. Preserve a direção das dependências: controller/worker → caso de uso → gateway/contrato → adaptador. Não coloque regras de negócio em controller, worker ou gateway.
-4. Trabalhe em TDD: escreva o spec, execute-o para confirmar a falha, implemente o mínimo necessário e execute-o novamente. Mantenha `describe` e `it` em inglês; mantenha mensagens de negócio em português.
-5. Valide apenas no escopo necessário durante a implementação e finalize com `yarn lint`, `yarn test` e, para mudanças HTTP, dados ou integração, `yarn test:e2e`. Informe limitações de ambiente (Oracle, Redis, credenciais ou serviços externos) sem ocultá-las.
+2. Identifique a versão de Node exigida pelo projeto em `.nvmrc`, `package.json` ou configuração equivalente. Quando a versão atual não atender ao requisito, use o NVM para instalá-la, se necessário, e selecioná-la antes de instalar dependências, testar ou executar scripts; confirme a versão com `node --version`.
+3. Use `src/@core/modules/modality` como primeira referência de convenções, substituindo-a por um módulo mais próximo quando houver.
+4. Preserve a direção das dependências: controller/worker → caso de uso → gateway/contrato → adaptador. Não coloque regras de negócio em controller, worker ou gateway.
+5. Trabalhe em TDD: escreva o spec, execute-o para confirmar a falha, implemente o mínimo necessário e execute-o novamente. Mantenha `describe` e `it` em inglês; mantenha mensagens de negócio em português.
+6. Valide apenas no escopo necessário durante a implementação e finalize com `yarn lint`, `yarn test` e, para mudanças HTTP, dados ou integração, `yarn test:e2e`. Informe limitações de ambiente (Oracle, Redis, credenciais ou serviços externos) sem ocultá-las.
 
 ## Seleção de referência
 
