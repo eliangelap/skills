@@ -13,13 +13,13 @@ Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspec
 2. Identifique a versão de Node exigida pelo projeto em `.nvmrc`, `package.json` ou configuração equivalente. Quando a versão atual não atender ao requisito, use o NVM para instalá-la, se necessário, e selecioná-la antes de instalar dependências, testar ou executar scripts; confirme a versão com `node --version`.
 3. Use `src/@core/modules/modality` como primeira referência de convenções, substituindo-a por um módulo mais próximo quando houver.
 4. Preserve a direção das dependências: controller/worker → caso de uso → gateway/contrato → adaptador. Não coloque regras de negócio em controller, worker ou gateway.
-5. Trabalhe em TDD: escreva o spec, execute-o para confirmar a falha, implemente o mínimo necessário e execute-o novamente. Mantenha `describe` e `it` em inglês; mantenha mensagens de negócio em português.
+5. Trabalhe em TDD: escreva o spec, execute-o para confirmar a falha, implemente o mínimo necessário e execute-o novamente. Ao criar ou ampliar testes em `@core`, inventarie todos os artefatos executáveis do escopo e crie ou complete specs para cada um, sem limitar a cobertura aos casos de uso; inclua obrigatoriamente o diretório `domain`. Mantenha `describe` e `it` em inglês; mantenha mensagens de negócio em português.
 6. Valide apenas no escopo necessário durante a implementação e finalize com `yarn lint`, `yarn test` e, para mudanças HTTP, dados ou integração, `yarn test:e2e`. Informe limitações de ambiente (Oracle, Redis, credenciais ou serviços externos) sem ocultá-las.
 
 ## Seleção de referência
 
 - Para estruturar ou expandir módulo em `@core`, leia [architecture.md](references/architecture.md).
-- Para criar ou revisar testes, leia [testing.md](references/testing.md).
+- Para criar ou revisar testes, leia [testing.md](references/testing.md). Em demandas de cobertura de `@core`, siga o inventário integral dessa referência, incluindo `domain`.
 - Para jobs, filas ou fluxos agendados, leia a seção correspondente de [architecture.md](references/architecture.md) e compare com as bases comuns já existentes.
 - Para E2E com dependências de dados, inspecione `architecture/e2e-test-plan.md` no repositório-alvo antes de alterar a ordem, os seeds ou as fixtures.
 

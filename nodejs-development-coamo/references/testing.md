@@ -8,6 +8,10 @@ Sequência preferencial: domínio → aplicação → infraestrutura → registr
 
 ## Localização e escopo
 
+Ao receber uma demanda para testar `@core`, trate todo código executável dessa camada como escopo obrigatório. Antes de escrever specs, inventarie os arquivos de produção em `domain`, `application` e `infra`, excluindo apenas declarações sem comportamento em runtime, como interfaces e tipos puros. Não encerre a demanda com testes somente para casos de uso: cubra também todos os artefatos executáveis em `domain`, inclusive entidades, DTOs, enums, value objects, factories, mappers e serviços de domínio quando existirem.
+
+Para cada artefato inventariado, crie um spec ou complete o spec existente. Teste o comportamento público e as ramificações relevantes; não crie testes artificiais para detalhes de implementação sem comportamento observável. Se algum artefato não puder ser testado de forma unitária, registre o motivo e aplique a forma de validação compatível com o projeto.
+
 | Artefato | Local do spec |
 | --- | --- |
 | Entidade, DTO, enum ou value object | `domain/**/__test__/<arquivo>.spec.ts` |
@@ -16,6 +20,8 @@ Sequência preferencial: domínio → aplicação → infraestrutura → registr
 | Controller | `@server/modules/<modulo>/__test__/<arquivo>.spec.ts` |
 | Producer/consumer | junto ao módulo worker correspondente |
 
+Para classes auxiliares, factories, mappers e serviços de domínio, siga o subdiretório `__test__` já adotado pelo módulo que os contém. Não mova testes existentes apenas para padronizar localização.
+
 Coloque testes de domínio no subdiretório do artefato se ele existir; caso contrário, use `domain/__test__`.
 
 ## Convenções de teste
@@ -23,6 +29,7 @@ Coloque testes de domínio no subdiretório do artefato se ele existir; caso con
 - Use `describe` e `it` em inglês; preserve textos de erros de produção em português.
 - Para DTOs decorados, valide instâncias válidas e inválidas com `validate` ou `validateSync`, cobrindo cada constraint relevante.
 - Para entidades TypeORM, cubra construção, colunas, defaults, campos opcionais e mutabilidade permitida.
+- Para value objects, enums, mappers, factories e serviços de domínio, cubra invariantes, transformações, valores-limite, defaults e erros de domínio aplicáveis.
 - Reutilize factories de `mock/`. Quando criar mocks de contratos, use `satisfies` e `jest.fn<ReturnType<...>, Parameters<...>>()`; não contorne tipos com `as unknown as`.
 - Em casos de uso, valide resultado, parâmetros e interações observáveis com gateways. Em falhas, use as exceções oficiais do projeto.
 - Em gateways, mocke `DataSource` e repositórios; não acesse Oracle. Em registries, resolva todos os símbolos exportados, mocke fábricas compartilhadas e prefira verificar instância/comportamento quando o binding for dinâmico.
