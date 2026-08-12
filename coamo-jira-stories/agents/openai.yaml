@@ -1,4 +1,0 @@
-interface:
-  display_name: "Histórias Jira COAMO"
-  short_description: "Crie histórias Jira claras e testáveis"
-  default_prompt: "Use $coamo-jira-stories para criar uma história Funcional para o produto informado."

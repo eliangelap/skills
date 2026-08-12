@@ -1,0 +1,4 @@
+interface:
+  display_name: "Histórias Jira Eliangela"
+  short_description: "Crie histórias Jira claras e testáveis"
+  default_prompt: "Use $eliangela-jira-stories para criar uma história Funcional para o produto informado."

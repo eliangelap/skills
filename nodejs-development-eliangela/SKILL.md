@@ -1,9 +1,9 @@
 ---
-name: nodejs-development-coamo
-description: Desenvolver, corrigir, refatorar e testar APIs Node.js/NestJS no padrão Coamo, especialmente projetos com TypeORM, Oracle, Inversify, Redis e BullMQ. Use ao implementar módulos ou endpoints, casos de uso, gateways, registries, workers, integrações e testes em APIs Coamo estruturadas em `@core`, `@server` e `@worker`.
+name: nodejs-development-eliangela
+description: Desenvolver, corrigir, refatorar e testar APIs Node.js/NestJS no padrão Eliangela, especialmente projetos com TypeORM, Oracle, Inversify, Redis e BullMQ. Use ao implementar módulos ou endpoints, casos de uso, gateways, registries, workers, integrações e testes em APIs Eliangela estruturadas em `@core`, `@server` e `@worker`.
 ---
 
-# Desenvolvimento Node.js Coamo
+# Desenvolvimento Node.js Eliangela
 
 Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspecione `package.json`, o módulo mais semelhante e os arquivos de configuração afetados; não aplique exemplos desta skill literalmente quando divergirem do código atual.
 

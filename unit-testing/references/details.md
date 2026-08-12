@@ -1,4 +1,4 @@
-**Arquitetura API Coamo Sports**
+**Arquitetura API Eliangela Sports**
 - **Stack Base**
   - Servico HTTP em NestJS 11 com bootstrapping em `src/main.ts:1`, habilitando validacao global, limites de payload via `body-parser` e Swagger em tempo de execucao.
   - `AppModule` (`src/app.module.ts:1`) compoe modulos funcionais, habilita ConfigModule com `.env.{NODE_ENV}`, vincula interceptador global de observabilidade e guard de permissoes, alem de iniciar cache Redis e conexao Oracle na inicializacao.

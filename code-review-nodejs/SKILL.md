@@ -1,6 +1,6 @@
 ---
 name: code-review-nodejs
-description: Revisar diffs e branches de projetos backend Node.js, especialmente APIs NestJS + TypeORM + Oracle do padrao Coamo. Use quando a usuaria pedir code review de alteracoes locais, staged, branch atual ou MR em projetos TypeScript/NestJS/Express/Fastify, com foco em arquitetura, regras de danger, testes, seguranca, regressao e consistencia de contrato.
+description: Revisar diffs e branches de projetos backend Node.js, especialmente APIs NestJS + TypeORM + Oracle do padrão Eliangela. Use quando a usuária pedir code review de alterações locais, staged, branch atual ou MR em projetos TypeScript/NestJS/Express/Fastify, com foco em arquitetura, regras de danger, testes, segurança, regressão e consistência de contrato.
 ---
 
 # Node Code Review
@@ -20,9 +20,9 @@ Revisar apenas o diff solicitado e priorizar bugs, regressoes, riscos e gaps de 
 4. Verificar se as regras de negocio novas ou alteradas sao coerentes entre si, com o fluxo existente e com os invariantes esperados do dominio.
 5. Responder em Portugues do Brasil, salvo pedido explicito em outro idioma.
 
-## Aplicar Regras da API Coamo
+## Aplicar Regras da API Eliangela
 
-Ao revisar um projeto backend NestJS do padrao Coamo, duplicar manualmente no diff as validacoes que costumam existir em `danger.js` e em `rules/`, mesmo que o pipeline possa ja faze-las.
+Ao revisar um projeto backend NestJS do padrão Eliangela, duplicar manualmente no diff as validações que costumam existir em `danger.js` e em `rules/`, mesmo que o pipeline possa já fazê-las.
 
 Comentar toda violacao encontrada nas linhas alteradas.
 

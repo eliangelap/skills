@@ -1,4 +1,4 @@
 interface:
-  display_name: "Code Review Node.js Coamo"
-  short_description: "Review de APIs Node.js Coamo"
-  default_prompt: "Use $code-review-nodejs para revisar este diff de API Node.js Coamo."
+  display_name: "Code Review Node.js Eliangela"
+  short_description: "Review de APIs Node.js Eliangela"
+  default_prompt: "Use $code-review-nodejs para revisar este diff de API Node.js Eliangela."

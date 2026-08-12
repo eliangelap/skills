@@ -17,7 +17,7 @@
 
 | Ordem | Suíte (`test/e2e-order.json`) | Entidades principais / FK | Seeds ou Fonte |
 |-------|-------------------------------|---------------------------|----------------|
-| 1 | `src/@server/modules/access/__test__/access.controller.e2e-spec.ts` | Solicitação de acesso, componentes OAuth | `src/@core/modules/common/infra/db/seeds/scripts/20250617140000_create_person_init.ts`, `20250819164807_coamo_component.seed.ts` |
+| 1 | `src/@server/modules/access/__test__/access.controller.e2e-spec.ts` | Solicitação de acesso, componentes OAuth | Seeds de pessoa e componentes OAuth |
 | 2 | `src/@server/modules/accountManagement/__test__/accountManagement.controller.e2e-spec.ts` | `AccountManagement` (PK `id`) | `20250703092538_create_account_management.seed.ts` |
 | 3 | `src/@server/modules/state/__test__/state.controller.e2e-spec.ts` | `State` (PK `code`), `City.stateCode` | `20250820101802_create_states.seed.ts` + base de municípios (pré-carregada) |
 | 4 | `src/@server/modules/address/__test__/address.controller.e2e-spec.ts` | Tipos de endereço/logradouro (valores enum) | Sem dependência de tabela, lógica em código |

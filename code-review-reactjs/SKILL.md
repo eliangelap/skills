@@ -1,11 +1,11 @@
 ---
 name: code-review-reactjs
-description: Revisar diffs e branches de projetos frontend web do padrão Coamo em React 19 + Vite + Ant Design, comparando com a branch-base adequada e aplicando em profundidade as regras de arquitetura, danger rules, padrões de camadas e boas práticas de React/TypeScript. Usar quando a usuária pedir code review de MRs, branches, staged changes ou worktree em projetos como web-gestor-rural-v2.
+description: Revisar diffs e branches de projetos frontend web do padrão Eliangela em React 19 + Vite + Ant Design, comparando com a branch-base adequada e aplicando em profundidade as regras de arquitetura, danger rules, padrões de camadas e boas práticas de React/TypeScript. Usar quando a usuária pedir code review de MRs, branches, staged changes ou worktree em projetos como web-gestor-rural-v2.
 ---
 
 # Regras de code review — WEB (React 19 + Vite + Ant Design)
 
-Aplicar quando o MR for de um projeto **frontend web** do padrão Coamo
+Aplicar quando o MR for de um projeto **frontend web** do padrão Eliangela
 (ex.: `web-gestor-rural-v2`).
 
 Fonte: `worktrees/web/.claude/rules/architecture.md`, README do projeto e

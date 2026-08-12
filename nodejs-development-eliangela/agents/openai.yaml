@@ -1,0 +1,4 @@
+interface:
+  display_name: "Desenvolvimento Node.js Eliangela"
+  short_description: "Padrões Node.js para APIs Eliangela"
+  default_prompt: "Use $nodejs-development-eliangela para implementar esta demanda na API Node.js Eliangela."
