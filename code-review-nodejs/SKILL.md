@@ -154,6 +154,7 @@ Comentar quando encontrar:
 - Domain entity com metodo de negocio fazendo IO.
 - Consultas ao banco dentro de loop quando houver alternativa de carga em lote, prefetch, agregacao ou reestruturacao do fluxo.
 - Requisicoes HTTP dentro de loop quando houver alternativa de batch, paralelizacao controlada, cache ou reorganizacao da integracao.
+- Loops que recompõem buffers ou chunks já acumulados apenas para medir o progresso, como `Buffer.concat(blocks).length` na condição. Quando o bloco tem tamanho conhecido, exigir contador numérico incrementado a cada inclusão e deixar a concatenação para o resultado final.
 - Blocos com excesso de logica aninhada, especialmente muitos `if` dentro de `if`, quando early return, extracao de funcao ou tabela de decisao simplificariam o fluxo.
 - Imports circulares entre modulos.
 - Endpoint sem decorator de documentacao Swagger do projeto.
