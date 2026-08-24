@@ -147,6 +147,7 @@ Nao apontar como erro os seguintes padroes idiomaticos de TypeORM usados no mape
 
 Comentar quando encontrar:
 
+- Valores hardcoded no codigo de producao. Exigir que o valor seja recebido por parametro ou configurado por variavel de ambiente, conforme o contexto.
 - Use case com mais de uma responsabilidade clara.
 - Use case lendo `process.env` direto.
 - Use case com `try/catch` que engole erro sem rethrow ou log estruturado.
