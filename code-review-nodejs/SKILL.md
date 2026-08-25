@@ -185,7 +185,7 @@ Aplicar estas regras ao codigo novo presente no diff:
 | 7 | Validar parametros na primeira linha de funcoes exportadas; nao ignorar retorno de Promise ou funcao que pode falhar | Apontar chamada sem checagem de falha quando relevante |
 | 8 | Em codigo de producao, sem `any`; sem `import * as` salvo exigencia da lib; usar `import type` para tipos | Apontar `as any`, `: any` e imports amplos injustificados somente fora de testes unitarios, E2E e seus arquivos de apoio |
 | 9 | `async` com tratamento explicito ou propagacao intencional; nunca `catch` vazio ou so com `console.log`; usar erros de dominio com `status` ou `code` | Apontar swallow de erro e `throw new Error` |
-| 10 | Respeitar Sonar: complexidade cognitiva <= 15, maximo de 5 parametros, evitar string literal repetida e remover variaveis mortas | Apontar funcoes novas com 6 ou mais parametros e repeticoes obvias |
+| 10 | Respeitar Sonar: complexidade cognitiva <= 15, evitar string literal repetida e remover variaveis mortas. Funcoes nao podem ter mais de 7 parametros; acima de 4, preferir um objeto tipado de entrada | Apontar funcoes novas com 8 ou mais parametros. Em funcoes novas com 5 a 7 parametros, solicitar objeto tipado quando isso melhorar a clareza e a evolucao do contrato |
 | 11 | Nao expor stack trace ao cliente; sanitizar input; secret/token via env; rota protegida valida auth/autz; sem `debug=true` ou logs verbosos em producao | Apontar credenciais hardcoded e falta de protecao |
 | 12 | Nao introduzir padroes com custo de performance evitavel em fluxos quentes, especialmente N+1, IO serial dentro de loop e recalculo redundante | Sugerir batching, joins, preload, cache, agregacao ou reorganizacao do fluxo |
 

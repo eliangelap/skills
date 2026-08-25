@@ -29,6 +29,7 @@ Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspec
 - Faça os casos de uso dependerem de interfaces de gateway, e deixe TypeORM, Oracle, Redis, Azure e APIs externas na infraestrutura.
 - Registre dependências com símbolos únicos no registry Inversify e exponha somente os casos de uso necessários ao adaptador chamador.
 - Reutilize factories de `mock/`; para mocks TypeScript, prefira `satisfies`, `jest.MockedFunction` ou tipos nativos do Jest. Não use casts inseguros para silenciar incompatibilidades.
+- Não crie funções com mais de sete parâmetros. Quando a função precisar de mais de quatro parâmetros, prefira receber um objeto tipado que nomeie e valide os dados de entrada; mantenha parâmetros posicionais apenas quando tornarem a chamada mais clara.
 - Nunca trate erros com `throw new error` ou `throw new Error`. Prefira as classes de exception já definidas pelo projeto; em aplicações NestJS, use as exceptions fornecidas pelo Nest quando não houver uma exception de domínio ou de projeto adequada.
 - Use imports, nomes, caminhos e convenções já vigentes no projeto. Não acrescente dependências nem padrões paralelos sem necessidade comprovada.
 
