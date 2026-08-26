@@ -121,6 +121,8 @@ Nao apontar como erro os seguintes padroes idiomaticos de TypeORM usados no mape
 ## Validar Excecoes, Auth e Observabilidade
 
 - Vetar `throw new Error('...')` em producao quando houver excecoes de dominio apropriadas.
+- Ao encontrar acesso a propriedade, método ou índice após chamada cujo retorno possa ser `null` ou `undefined`, comentar a ausência de guarda com optional chaining (`?.`), pois ela pode causar `TypeError: Cannot read properties of null`.
+- Não exigir `?.` cegamente: avaliar o contrato do fluxo. Quando a lógica não puder continuar sem o objeto, exigir uma validação/guarda explícita que interrompa o processamento com a exception de domínio ou do projeto apropriada; optional chaining que apenas propaga `undefined` nesse caso é bug.
 - Verificar coerencia, clareza e padronizacao das mensagens de erro; comentar mensagens ambiguas, genericas, contraditorias com a regra de negocio ou desalinhadas com o contrato da API.
 - Exigir `@User()` em controller em vez de `req.user`.
 - Exigir `@RequirePermission(...)` em rotas protegidas.

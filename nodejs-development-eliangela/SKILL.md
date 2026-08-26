@@ -33,6 +33,7 @@ Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspec
 - Nunca trate erros com `throw new error` ou `throw new Error`. Prefira as classes de exception já definidas pelo projeto; em aplicações NestJS, use as exceptions fornecidas pelo Nest quando não houver uma exception de domínio ou de projeto adequada.
 - Use imports, nomes, caminhos e convenções já vigentes no projeto. Não acrescente dependências nem padrões paralelos sem necessidade comprovada.
 - Nunca faça múltiplas declarações de `import` para o mesmo arquivo. Agrupe todos os símbolos necessários em uma única declaração, usando `type` nos especificadores quando aplicável.
+- Ao consumir o retorno de uma função que possa ser `null` ou `undefined`, proteja o acesso às propriedades, métodos ou índices com optional chaining (`resultado?.propriedade`). Antes de adotá-lo, avalie o contrato do fluxo: quando a ausência do objeto impedir a continuação correta da lógica, faça uma guarda explícita e encerre o fluxo com a exception de domínio/projeto apropriada, em vez de propagar `undefined` silenciosamente.
 
 ## Encerramento
 
