@@ -112,6 +112,8 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 - Nunca logar PII como CPF ou e-mail completo.
 - `*.http.gateway.ts` deve usar o client centralizado via DI.
 - Erros HTTP devem ser convertidos em exceptions de domínio.
+- Ao encontrar acesso a propriedade, método ou índice após chamada cujo retorno possa ser `null` ou `undefined`, comentar a ausência de guarda com optional chaining (`?.`), pois ela pode causar `TypeError: Cannot read properties of null`.
+- Não exigir `?.` cegamente: avaliar o contrato do fluxo. Quando a tela, o componente ou a ação não puder continuar corretamente sem o objeto, exigir uma validação/guarda explícita que interrompa o processamento, exiba o estado de erro apropriado ou use a exception padronizada; optional chaining que apenas propaga `undefined` nesse caso é bug.
 - Toda env de runtime deve usar `VITE_`.
 - `process.env.X` em runtime deve ser apontado; usar `import.meta.env.VITE_X`.
 - URL ou credencial hardcoded deve ser apontada.
