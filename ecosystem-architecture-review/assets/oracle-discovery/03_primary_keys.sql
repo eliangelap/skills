@@ -1,0 +1,1 @@
+SELECT c.owner,c.table_name,c.constraint_name,cc.position,cc.column_name FROM all_constraints c JOIN all_cons_columns cc ON cc.owner=c.owner AND cc.constraint_name=c.constraint_name WHERE c.owner=UPPER('&OWNER') AND c.constraint_type='P' ORDER BY c.table_name,cc.position;
