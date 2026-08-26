@@ -1,15 +1,17 @@
 ---
 name: jira-stories
-description: Create complete, testable, traceable user stories in Eliangela's Jira standard. Use when asked to draft, refine, or structure Functional, Enabler, Exploratory, Kaizen, Bug, Task, or Technical Debt stories for an Eliangela product, app, service, team, or initiative.
+description: Create complete, testable, traceable Jira epics and user stories in Eliangela's standard. Use when asked to draft, refine, or structure an epic or Functional, Enabler, Exploratory, Kaizen, Bug, Task, or Technical Debt story.
 ---
 
-# Histórias Jira
+# Épicos e histórias Jira
 
-Create Jira-ready stories in Brazilian Portuguese. Write clearly, objectively, and without unnecessary technical jargon. Keep the complete story between 300 and 600 words unless the user explicitly asks for a different length.
+Create Jira-ready epics and stories in Brazilian Portuguese, following the Eliangela standard. Write clearly, objectively, and without unnecessary technical jargon. Keep each complete item between 300 and 600 words unless the user explicitly asks for a different length.
 
-## Gather the story inputs
+## Identify the work item and gather inputs
 
-Extract the type, product or project, persona, current context, desired action, expected benefit, and affected area from the request and conversation.
+First identify whether the request is for an **Épico** or a **História**. When the user asks for both, write the epic first and then each requested story, linking them only when that relationship was supplied or directly established by the request.
+
+For a story, extract the type, product or project, persona, current context, desired action, expected benefit, and affected area from the request and conversation. For an epic, extract the product or initiative, business problem or opportunity, intended outcome, scope, affected audiences, expected value, and known related work.
 
 When material information is missing, either ask a concise follow-up question or state a reasonable assumption before the story. Never invent Jira keys, linked items, interfaces, integrations, dates, teams, or product names.
 
@@ -27,7 +29,52 @@ Use only these types:
 
 If no type is given, infer the most suitable one from the objective and state that choice. Use `[Tipo]` with the selected type in the title.
 
-## Write the required Jira structure
+## Write an epic
+
+Use this structure when the requested item is an epic. An epic should describe a coherent business outcome that can be broken into multiple stories; it is not a large story with implementation steps.
+
+```markdown
+## Título
+[Épico] <resultado ou objetivo estratégico>
+
+## Objetivo do Épico
+<resultado de negócio ou capacidade que será alcançada>
+
+## Contexto
+<cenário atual, problema, oportunidade ou motivação>
+
+## Objetivo e Valor
+<valor para o negócio, usuário ou operação>
+
+## Escopo
+### Inclui
+- <capacidade, jornada ou resultado dentro do épico>
+
+### Não inclui
+- <limite conhecido do épico>
+
+## Histórias relacionadas
+- <histórias fornecidas ou frentes a detalhar, sem inventar chaves Jira>
+
+## Critérios de Sucesso
+- [ ] <resultado mensurável, observável ou validável do épico>
+
+## Relacionamentos
+<referências fornecidas a outros épicos, histórias, bugs ou iniciativas>
+
+## Interfaces Impactadas
+<sistemas, módulos, apps ou integrações informados ou diretamente implicados>
+
+## Labels sugeridas para Jira
+`epico`, `<produto>`, `<área>`
+
+## Dica de ouro
+<recomendação estratégica para fatiar e acompanhar o épico>
+```
+
+Omit the optional **Relacionamentos**, **Interfaces Impactadas**, and **Não inclui** sections when the request does not support them. If stories have not been identified, describe them as areas to detail rather than fabricating titles, keys, or estimates. Include success criteria that demonstrate outcome or adoption, not merely that all tickets were closed. End with a tip that recommends thin, independently valuable stories and an explicit outcome metric.
+
+## Write a story
 
 Use every section below, in this order. Preserve the headings and omit only the two sections marked optional when no supported information exists.
 
@@ -103,4 +150,4 @@ End with one practical **Dica de ouro** appropriate to the selected type:
 
 ## Final quality check
 
-Before responding, verify that the title, story sentence, context, value, acceptance criteria, labels, effort reference, and tip are present; optional sections contain only supplied facts; the text is Jira-ready; and every acceptance criterion can be tested independently.
+Before responding, verify that the item type is clear. For stories, verify that the title, story sentence, context, value, acceptance criteria, labels, effort reference, and tip are present. For epics, verify that outcome, context, scope, success criteria, labels, and a slicing-oriented tip are present. In every case, optional sections must contain only supported facts, text must be Jira-ready, and every criterion must be independently verifiable.
