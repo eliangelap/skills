@@ -81,6 +81,7 @@ __mock__/
 - `application/<x>.use.case.ts` fazendo `axios` direto em vez de gateway.
 - `domain/**` importando de `application/` ou `infra/`.
 - `infra/<x>.http.gateway.ts` sem implementar `I<Name>Gateway`.
+- Parsers, normalizações ou validações de entrada, contrato ou regra de negócio em `infra/**`. Exigir que fiquem em `application/`; se forem uma responsabilidade distinta, exigir um caso de uso separado, com contrato e testes próprios, composto explicitamente pelo fluxo principal.
 - Imports profundos `../../../` em vez de `@core` ou `@presentation`.
 
 ## Container Registry (Inversify)

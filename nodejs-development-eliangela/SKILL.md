@@ -26,7 +26,8 @@ Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspec
 ## Regras de implementação
 
 - Modele entidades, value objects, DTOs e contratos no domínio; use `class-validator` e Swagger conforme os pares existentes.
-- Faça os casos de uso dependerem de interfaces de gateway, e deixe TypeORM, Oracle, Redis, Azure e APIs externas na infraestrutura.
+- Faça os casos de uso dependerem de interfaces de gateway, e deixe TypeORM, Oracle, Redis, Azure e APIs externas na infraestrutura. A infraestrutura deve limitar-se a adaptar essas integrações e a persistir ou transportar dados: não coloque nela parsers, normalizações nem validações de entrada, contrato ou regra de negócio.
+- Coloque parsers e validações na camada `application`. Quando parsing, validação ou normalização for uma responsabilidade distinta do fluxo principal, modele-a como um caso de uso separado, com contrato e testes próprios, e faça o caso de uso chamador compô-lo explicitamente.
 - Registre dependências com símbolos únicos no registry Inversify e exponha somente os casos de uso necessários ao adaptador chamador.
 - Reutilize factories de `mock/`; para mocks TypeScript, prefira `satisfies`, `jest.MockedFunction` ou tipos nativos do Jest. Não use casts inseguros para silenciar incompatibilidades.
 - Não crie funções com mais de sete parâmetros. Quando a função precisar de mais de quatro parâmetros, prefira receber um objeto tipado que nomeie e valide os dados de entrada; mantenha parâmetros posicionais apenas quando tornarem a chamada mais clara.

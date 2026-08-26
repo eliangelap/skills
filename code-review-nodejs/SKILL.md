@@ -72,6 +72,7 @@ Comentar as seguintes violacoes:
 - `application/<x>.use.case.ts` fazendo IO direto de HTTP, banco, Redis ou Bull em vez de delegar para gateway via DI.
 - `domain/**` importando de `application/` ou `infra/`.
 - `infra/<x>.db.gateway.ts` sem implementar a interface `I<Name>Gateway` de `domain/`.
+- Parsers, normalizações ou validações de entrada, contrato ou regra de negócio em `infra/**`. Exigir que fiquem em `application/`; se forem uma responsabilidade distinta, exigir um caso de uso separado, com contrato e testes próprios, composto explicitamente pelo fluxo principal.
 - Imports profundos com `../../../` quando path aliases deveriam ser usados.
 
 ## Validar Container Registry

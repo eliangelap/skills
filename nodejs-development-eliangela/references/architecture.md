@@ -25,7 +25,7 @@ src/@core/modules/<modulo>/
 
 Crie entidades TypeORM e DTOs no domínio, com nomes de tabela/coluna e decorators compatíveis com o banco e o módulo de referência. Defina interfaces de gateway antes de seus adaptadores. Faça cada caso de uso receber o contrato pelo construtor e expor `execute`.
 
-Em `infra`, implemente o gateway com `DataSource` ou a integração específica. No registry, crie `Symbol.for(...)` exclusivos, faça os bindings do container e exporte apenas os atalhos de casos de uso exigidos pelos consumidores. Compare o registry com o módulo de referência antes de escolher entre `toConstantValue` e `toDynamicValue`.
+Em `infra`, implemente apenas o gateway com `DataSource` ou a integração específica. Parsers, normalizações e validações de entrada, contrato ou negócio pertencem a `application`, nunca ao adaptador de infraestrutura. Quando forem responsabilidades autônomas, crie casos de uso separados, com contratos e testes próprios, e componha-os no fluxo que deles precisar. No registry, crie `Symbol.for(...)` exclusivos, faça os bindings do container e exporte apenas os atalhos de casos de uso exigidos pelos consumidores. Compare o registry com o módulo de referência antes de escolher entre `toConstantValue` e `toDynamicValue`.
 
 ## Adaptadores
 
