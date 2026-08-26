@@ -1,0 +1,4 @@
+interface:
+  display_name: "Desenvolvimento Node.js"
+  short_description: "Padrões Node.js para APIs em camadas"
+  default_prompt: "Use $nodejs-development para implementar esta demanda na API Node.js."

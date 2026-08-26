@@ -1,9 +1,9 @@
 ---
-name: eliangela-jira-stories
+name: jira-stories
 description: Create complete, testable, traceable user stories in Eliangela's Jira standard. Use when asked to draft, refine, or structure Functional, Enabler, Exploratory, Kaizen, Bug, Task, or Technical Debt stories for an Eliangela product, app, service, team, or initiative.
 ---
 
-# Eliangela Jira Stories
+# Histórias Jira
 
 Create Jira-ready stories in Brazilian Portuguese. Write clearly, objectively, and without unnecessary technical jargon. Keep the complete story between 300 and 600 words unless the user explicitly asks for a different length.
 

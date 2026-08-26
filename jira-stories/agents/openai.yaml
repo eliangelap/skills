@@ -1,0 +1,4 @@
+interface:
+  display_name: "Histórias Jira"
+  short_description: "Crie histórias Jira claras e testáveis"
+  default_prompt: "Use $jira-stories para criar uma história Funcional para o produto informado."

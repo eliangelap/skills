@@ -1,9 +1,9 @@
 ---
-name: reactjs-development-eliangela
+name: reactjs-development
 description: Desenvolver, corrigir, refatorar e testar frontends React 19 com Vite e Ant Design no padrão Eliangela, especialmente módulos em `@core` e `@presentation`. Use para implementar telas, componentes, hooks, casos de uso, gateways, registries e testes; não use para apenas revisar diffs.
 ---
 
-# Desenvolvimento ReactJS Eliangela
+# Desenvolvimento ReactJS
 
 Implemente a demanda aderindo à arquitetura e às convenções já presentes no repositório. Antes de editar, leia `package.json`, a configuração afetada e um módulo semelhante ao solicitado; esta skill é referência, não substitui o padrão concreto do projeto.
 

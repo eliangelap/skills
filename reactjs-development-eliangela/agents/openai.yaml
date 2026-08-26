@@ -1,4 +1,0 @@
-interface:
-  display_name: "Desenvolvimento ReactJS Eliangela"
-  short_description: "Desenvolva frontends React no padrão Eliangela"
-  default_prompt: "Use $reactjs-development-eliangela para implementar esta demanda no frontend."
