@@ -10,16 +10,17 @@ Implemente a demanda aderindo à arquitetura e às convenções já presentes no
 ## Fluxo de trabalho
 
 1. Delimite o impacto: domínio, aplicação, infraestrutura, apresentação, rotas, configuração ou integração.
-2. Identifique uma referência equivalente no projeto. Para um módulo novo, use a estrutura mais próxima em `src/@core/modules` e `src/@presentation/modules`.
-3. Preserve o fluxo `rota/página ou hook → registry → caso de uso → contrato de gateway → adaptador HTTP`. Não instancie casos de uso em componentes e não faça IO diretamente em hooks ou componentes.
-4. Trabalhe em TDD: escreva ou ajuste o spec, confirme a falha, implemente o mínimo necessário e valide em verde. Ao criar ou alterar artefatos executáveis de `@core`, mantenha specs relevantes para cada artefato alterado, incluindo domínio, aplicação, infraestrutura e registry; não crie specs para mocks que só forneçam dados aos testes.
-5. Valide inicialmente no escopo alterado. Finalize com os comandos definidos pelo repositório — normalmente `yarn lint` e `yarn test` — e informe com clareza o que não pôde ser executado e por quê.
+2. Em código pré-existente, antes de alterar lógica já existente, pergunte à usuária se essa lógica pode ser melhorada. Se ela autorizar, elabore antes da implementação um plano de alteração com objetivo, comportamento atual e proposto, camadas, casos de uso, contratos e testes afetados. Sem essa autorização, limite-se à mudança necessária e preserve a lógica existente fora do escopo.
+3. Identifique uma referência equivalente no projeto. Para um módulo novo, use a estrutura mais próxima em `src/@core/modules` e `src/@presentation/modules`.
+4. Preserve o fluxo `rota/página ou hook → registry → caso de uso → contrato de gateway → adaptador HTTP`. Não instancie casos de uso em componentes e não faça IO diretamente em hooks ou componentes.
+5. Trabalhe em TDD: escreva ou ajuste o spec, confirme a falha, implemente o mínimo necessário e valide em verde. Ao criar ou alterar artefatos executáveis de `@core`, mantenha specs relevantes para cada artefato alterado, incluindo domínio, aplicação, infraestrutura e registry; não crie specs para mocks que só forneçam dados aos testes.
+6. Valide inicialmente no escopo alterado. Finalize com os comandos definidos pelo repositório — normalmente `yarn lint` e `yarn test` — e informe com clareza o que não pôde ser executado e por quê.
 
 ## Arquitetura e dependências
 
 - Mantenha `@core` independente de React, React Router, Ant Design, `react-hook-form` e APIs do navegador. Ele contém regras de negócio, contratos, entidades e casos de uso.
 - Em `@presentation`, concentre-se em UI, estado de interação, composição de rotas, contextos e hooks. Cálculos, parsing, normalização, validação de contrato e regras de negócio pertencem a `application`.
-- Faça casos de uso dependerem de interfaces de gateway. `infra` apenas adapta HTTP ou outras integrações e implementa o contrato; use o cliente centralizado e as exceptions já adotadas pelo projeto.
+- Faça casos de uso dependerem de interfaces de gateway. `infra` apenas adapta HTTP ou outras integrações e implementa o contrato; regras de negócio nela são proibidas, inclusive decisões condicionais que definam resultado de negócio. Toda regra, parsing, validação ou normalização pertence a `application` e deve estar em um caso de uso, com contrato e testes próprios; quando for responsabilidade distinta, crie um caso de uso separado e componha-o explicitamente no fluxo principal.
 - Exponha casos de uso por registries Inversify com símbolos e bindings consistentes com o módulo de referência. A apresentação consome o atalho do registry, nunca importa o arquivo `*.use.case.ts` diretamente.
 - Siga as convenções vigentes para `T` em types, `I` em interfaces, `E` em enums, arquivos de caso de uso em kebab-case, componentes em PascalCase e hooks iniciados por `use`.
 - Use aliases `@core` e `@presentation`, em vez de imports profundos. Agrupe símbolos do mesmo módulo em uma única declaração de import e use `import type` quando aplicável.

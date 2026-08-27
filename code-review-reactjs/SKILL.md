@@ -81,7 +81,7 @@ __mock__/
 - `application/<x>.use.case.ts` fazendo `axios` direto em vez de gateway.
 - `domain/**` importando de `application/` ou `infra/`.
 - `infra/<x>.http.gateway.ts` sem implementar `I<Name>Gateway`.
-- Parsers, normalizações ou validações de entrada, contrato ou regra de negócio em `infra/**`. Exigir que fiquem em `application/`; se forem uma responsabilidade distinta, exigir um caso de uso separado, com contrato e testes próprios, composto explicitamente pelo fluxo principal.
+- Qualquer regra de negócio em `infra/**`, inclusive decisões condicionais que definam resultado de negócio. A infraestrutura só adapta integrações, persiste ou transporta dados. Exigir que a regra seja movida para `application/` e implementada em um caso de uso, com contrato e testes próprios; quando for responsabilidade distinta, exigir um caso de uso separado, composto explicitamente pelo fluxo principal. Parsers, normalizações e validações também pertencem a `application/`.
 - Imports profundos `../../../` em vez de `@core` ou `@presentation`.
 
 ## Container Registry (Inversify)
