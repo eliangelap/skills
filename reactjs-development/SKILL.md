@@ -43,6 +43,7 @@ Leia [architecture.md](references/architecture.md) ao criar ou reorganizar módu
 - Proteja rotas conforme o mecanismo já adotado e não exponha PII, secrets ou stack traces em notificações e logs.
 - Use apenas variáveis de runtime `import.meta.env.VITE_*`; não use `process.env` no código executado pelo navegador e não deixe URLs, chaves ou credenciais hardcoded.
 - Mantenha modais, notificações e cliente HTTP centralizados, reutilizando as abstrações da aplicação.
+- Ao registrar falhas na observabilidade, use mensagem ou evento específico da operação e atributos que permitam diagnóstico, como operação, identificador técnico não sensível, código/categoria do erro e causa. Não registre mensagens genéricas como `erro ao processar`; a observabilidade não substitui tratamento explícito: após registrar, propague ou converta o erro conforme o contrato do fluxo e apresente o estado de erro adequado. Nunca capture uma exceção apenas para registrá-la e continuar silenciosamente.
 
 ## Encerramento
 

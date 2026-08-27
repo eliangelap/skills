@@ -111,6 +111,8 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 - Rotas protegidas devem estar corretamente guardadas em `routes.tsx`.
 - `console.log` em produção deve ser apontado.
 - Nunca logar PII como CPF ou e-mail completo.
+- Apontar registros de observabilidade com mensagem ou evento genérico, como `erro ao processar`, que não identifiquem a operação nem tragam contexto técnico seguro para diagnóstico. Exigir operação, identificador técnico não sensível quando aplicável, código/categoria e causa do erro.
+- Apontar `catch` que apenas registra na observabilidade e permite a continuação silenciosa do fluxo. O erro deve ser propagado ou convertido conforme o contrato após o registro, e a UI deve receber o estado de erro adequado; observabilidade não é tratamento de erro.
 - `*.http.gateway.ts` deve usar o client centralizado via DI.
 - Erros HTTP devem ser convertidos em exceptions de domínio.
 - Ao encontrar acesso a propriedade, método ou índice após chamada cujo retorno possa ser `null` ou `undefined`, comentar a ausência de guarda com optional chaining (`?.`), pois ela pode causar `TypeError: Cannot read properties of null`.

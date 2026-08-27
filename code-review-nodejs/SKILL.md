@@ -130,6 +130,8 @@ Nao apontar como erro os seguintes padroes idiomaticos de TypeORM usados no mape
 - Vetar parametro `executionId`; o contexto deve vir de `AsyncLocalStorage`.
 - Vetar `console.log` em producao.
 - Preferir `observability.event(...)` a `TelemetryClient` direto.
+- Comentar registros de observabilidade com mensagem ou evento genérico, como `erro ao processar`, que não identifiquem a operação nem tragam contexto técnico seguro para diagnóstico. Exigir operação, identificador técnico não sensível quando aplicável, código/categoria e causa do erro.
+- Comentar `catch` que apenas registra na observabilidade e permite a continuação silenciosa do fluxo. O erro deve ser propagado ou convertido conforme o contrato após o registro; observabilidade não é tratamento de erro.
 - Aceitar logger do NestJS em middlewares e guards, nao em use cases.
 
 ## Validar Paginacao, Banco e Workers
