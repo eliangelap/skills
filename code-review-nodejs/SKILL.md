@@ -26,7 +26,7 @@ Antes de executar testes ou qualquer script do repositório, identifique a vers�
 
 Execute os comandos de teste aplicáveis definidos em `package.json` após essa confirmação — ao menos a suíte unitária, e lint/E2E quando existirem e forem pertinentes ao diff. Não omita a execução por divergência de versão de Node: corrija o runtime com NVM primeiro. Registre no review os comandos executados, falhas encontradas e qualquer bloqueio externo que impeça uma validação.
 
-## Aplicar Regras da API Eliangela
+## Aplicar Regras da API
 
 Ao revisar um projeto backend NestJS do padrão Eliangela, duplicar manualmente no diff as validações que costumam existir em `danger.js` e em `rules/`, mesmo que o pipeline possa já fazê-las.
 
