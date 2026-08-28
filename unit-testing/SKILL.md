@@ -18,6 +18,7 @@ argument-hint: "<module-name> [layer: domain|application|infra|registry|controll
 
 ## Core Rules
 - Check `package.json` first to confirm the active versions of Jest, NestJS, class-validator, ORM, and related tooling.
+- Before installing dependencies or running a test command, identify the Node version required by `.nvmrc`, `package.json`, or equivalent configuration and compare it with `node --version`. When it does not match, load NVM, run `nvm install <version>` if needed, then `nvm use <version>`; verify the active runtime with `node --version`. Run the tests only after this confirmation, rather than skipping validation because of a Node mismatch.
 - Use the `modality` module as the canonical style reference when the current repository follows the Eliangela pattern.
 - Follow TDD: write the failing test first, implement the minimum production change, then rerun until green.
 - Prefer the layer order Domain -> Application -> Infra -> Registry -> Server/Worker -> E2E.
@@ -29,7 +30,7 @@ argument-hint: "<module-name> [layer: domain|application|infra|registry|controll
 - Do not use `as unknown as jest.Mocked<T>`.
 - Never hit real infra in unit tests; mock DB, Redis, queues, storage, and external services.
 - Keep controller tests facade-oriented and registry tests binding-oriented.
-- Run the validation commands that exist in `package.json`, usually `yarn lint`, `yarn test`, and `yarn test:e2e` when applicable.
+- Run the validation commands that exist in `package.json`, usually `yarn lint`, `yarn test`, and `yarn test:e2e` when applicable, using the Node version confirmed through NVM. Report each command's result; if an external dependency blocks one, report the blocker and its observed failure instead of treating it as executed.
 
 ## Final Checklist
 - Spec is in the correct layer path.

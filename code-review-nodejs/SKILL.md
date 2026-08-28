@@ -20,6 +20,12 @@ Revisar apenas o diff solicitado e priorizar bugs, regressoes, riscos e gaps de 
 4. Verificar se as regras de negocio novas ou alteradas sao coerentes entre si, com o fluxo existente e com os invariantes esperados do dominio.
 5. Responder em Portugues do Brasil, salvo pedido explicito em outro idioma.
 
+## Preparar Runtime e Validar
+
+Antes de executar testes ou qualquer script do repositório, identifique a versão de Node exigida em `.nvmrc`, `package.json` ou configuração equivalente e compare-a com `node --version`. Se a versão atual não atender ao requisito, carregue o NVM e execute `nvm install <versão>` se necessário, seguido de `nvm use <versão>`; confirme a versão ativa com `node --version`.
+
+Execute os comandos de teste aplicáveis definidos em `package.json` após essa confirmação — ao menos a suíte unitária, e lint/E2E quando existirem e forem pertinentes ao diff. Não omita a execução por divergência de versão de Node: corrija o runtime com NVM primeiro. Registre no review os comandos executados, falhas encontradas e qualquer bloqueio externo que impeça uma validação.
+
 ## Aplicar Regras da API Eliangela
 
 Ao revisar um projeto backend NestJS do padrão Eliangela, duplicar manualmente no diff as validações que costumam existir em `danger.js` e em `rules/`, mesmo que o pipeline possa já fazê-las.
@@ -200,6 +206,7 @@ Aplicar estas regras ao codigo novo presente no diff:
 - Apontar asserts ausentes, edge cases nao cobertos e expectativas desatualizadas.
 - Se teste falhar, distinguir regressao real de teste desatualizado.
 - Comentar ausencia de spec quando a regra do projeto exigir.
+- Incluir no resultado o efeito da execução real dos testes; análise estática não substitui essa validação.
 
 ## Formatar a Resposta
 
