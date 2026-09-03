@@ -27,6 +27,7 @@ Desenvolva mudanças aderentes à arquitetura existente. Antes de editar, inspec
 ## Regras de implementação
 
 - Modele entidades, value objects, DTOs e contratos no domínio; use `class-validator` e Swagger conforme os pares existentes.
+- Não adicione comentários explicativos no meio do código. Prefira nomes, funções e estruturas autoexplicativas; mantenha apenas comentários exigidos por ferramentas, licenças ou convenções do projeto.
 - Faça os casos de uso dependerem de interfaces de gateway, e deixe TypeORM, Oracle, Redis, Azure e APIs externas na infraestrutura. A infraestrutura limita-se a adaptar integrações e a persistir ou transportar dados; regras de negócio nela são proibidas, inclusive decisões condicionais que definam resultado de negócio.
 - Coloque parsers, validações e normalizações na camada `application`. Toda regra de negócio deve ser implementada em um caso de uso dessa camada, com contrato e testes próprios. Quando for uma responsabilidade distinta do fluxo principal, crie um caso de uso separado e faça o caso de uso chamador compô-lo explicitamente.
 - Registre dependências com símbolos únicos no registry Inversify e exponha somente os casos de uso necessários ao adaptador chamador.

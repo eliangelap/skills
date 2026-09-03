@@ -30,6 +30,7 @@ Leia [architecture.md](references/architecture.md) ao criar ou reorganizar módu
 ## React, Ant Design e estado
 
 - Prefira componentes com uma responsabilidade clara; extraia componentes ou hooks quando a composição, a regra de interação ou o estado se tornarem independentes.
+- Não adicione comentários explicativos no meio do código. Prefira nomes, funções e estruturas autoexplicativas; mantenha apenas comentários exigidos por ferramentas, licenças ou convenções do projeto.
 - Use fonte reativa para valores de formulário que alteram a renderização, a validação ou o payload. Com Ant Design, prefira `Form.useWatch` a leituras imperativas de `form.getFieldValue()` ou `getFieldsValue()` durante o render.
 - Declare dependências granulares em `useMemo`, `useCallback` e `useEffect`; não dependa do objeto inteiro quando apenas campos específicos são usados.
 - Em efeitos, faça uma única chamada para uma função nomeada que encapsule o fluxo. Trate carregamento, vazio, erro e sucesso quando forem estados possíveis da tela.
