@@ -26,6 +26,7 @@ argument-hint: "<module-name> [layer: domain|application|infra|registry|controll
 
 ## Testing Conventions
 - Reuse factories from `mock/` when available; extend them instead of duplicating fixtures.
+- Coloque todo teste unitário no subdiretório `__test__` do diretório do arquivo testado e nomeie-o como `*.spec.ts` ou `*.spec.tsx`, conforme a extensão do código testado. Exemplo: `src/pages/schedule/index.tsx` deve ser testado em `src/pages/schedule/__test__/index.spec.tsx`. Testes E2E seguem a convenção específica do projeto.
 - Prefer typed Jest mocks with `satisfies jest.Mocked<T>` or explicit Jest helper generics.
 - Do not use `as unknown as jest.Mocked<T>`.
 - Never hit real infra in unit tests; mock DB, Redis, queues, storage, and external services.
