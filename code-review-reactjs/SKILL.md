@@ -113,6 +113,7 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 - Nunca logar PII como CPF ou e-mail completo.
 - Apontar registros de observabilidade com mensagem ou evento genérico, como `erro ao processar`, que não identifiquem a operação nem tragam contexto técnico seguro para diagnóstico. Exigir operação, identificador técnico não sensível quando aplicável, código/categoria e causa do erro.
 - Apontar `catch` que apenas registra na observabilidade e permite a continuação silenciosa do fluxo. O erro deve ser propagado ou convertido conforme o contrato após o registro, e a UI deve receber o estado de erro adequado; observabilidade não é tratamento de erro.
+- Apontar `catch (error)` quando `error` não for usado no bloco. Nessa situação, exigir `catch { ... }`; declarar a variável somente quando ela for necessária, por exemplo, para preservar a causa, registrar contexto ou converter a exception.
 - `*.http.gateway.ts` deve usar o client centralizado via DI.
 - Erros HTTP devem ser convertidos em exceptions de domínio.
 - Ao encontrar acesso a propriedade, método ou índice após chamada cujo retorno possa ser `null` ou `undefined`, comentar a ausência de guarda com optional chaining (`?.`), pois ela pode causar `TypeError: Cannot read properties of null`.
@@ -186,3 +187,5 @@ Apontar toda violação encontrada em linhas novas ou alteradas.
 2. Depois listar perguntas abertas ou assumptions.
 3. Encerrar com um resumo breve apenas se agregar valor.
 4. Se não houver findings, dizer isso explicitamente e citar riscos residuais ou lacunas de teste.
+
+Antes de qualquer commit, executar o comando de lint do projeto com correção automática (`yarn lint --fix` ou o equivalente definido pelo repositório) e revisar as alterações produzidas antes do stage.

@@ -128,6 +128,7 @@ Nao apontar como erro os seguintes padroes idiomaticos de TypeORM usados no mape
 ## Validar Excecoes, Auth e Observabilidade
 
 - Vetar `throw new Error('...')` em producao quando houver excecoes de dominio apropriadas.
+- Apontar `catch (error)` quando `error` nao for usado no bloco. Nessa situacao, exigir `catch { ... }`; declarar a variavel somente quando ela for necessaria, por exemplo, para preservar a causa, registrar contexto ou converter a exception.
 - Ao encontrar acesso a propriedade, método ou índice após chamada cujo retorno possa ser `null` ou `undefined`, comentar a ausência de guarda com optional chaining (`?.`), pois ela pode causar `TypeError: Cannot read properties of null`.
 - Não exigir `?.` cegamente: avaliar o contrato do fluxo. Quando a lógica não puder continuar sem o objeto, exigir uma validação/guarda explícita que interrompa o processamento com a exception de domínio ou do projeto apropriada; optional chaining que apenas propaga `undefined` nesse caso é bug.
 - Verificar coerencia, clareza e padronizacao das mensagens de erro; comentar mensagens ambiguas, genericas, contraditorias com a regra de negocio ou desalinhadas com o contrato da API.
@@ -226,6 +227,8 @@ Se nenhum problema for encontrado, dizer isso explicitamente e registrar risco r
 - `git diff origin/develop...HEAD`
 - `git diff origin/main...HEAD`
 - `git log --oneline --decorate -5`
+
+Antes de qualquer commit, executar o comando de lint do projeto com correcao automatica (`yarn lint --fix` ou o equivalente definido pelo repositorio) e revisar as alteracoes produzidas antes do stage.
 
 ## Foco Final
 

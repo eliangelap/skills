@@ -14,7 +14,7 @@ Implemente a demanda aderindo à arquitetura e às convenções já presentes no
 3. Identifique uma referência equivalente no projeto. Para um módulo novo, use a estrutura mais próxima em `src/@core/modules` e `src/@presentation/modules`.
 4. Preserve o fluxo `rota/página ou hook → registry → caso de uso → contrato de gateway → adaptador HTTP`. Não instancie casos de uso em componentes e não faça IO diretamente em hooks ou componentes.
 5. Trabalhe em TDD: escreva ou ajuste o spec, confirme a falha, implemente o mínimo necessário e valide em verde. Todo teste unitário deve ficar no subdiretório `__test__` do diretório do arquivo testado e usar a terminação `.spec.ts` ou `.spec.tsx`, conforme a extensão do código testado. Exemplo: `src/pages/schedule/index.tsx` deve ser testado em `src/pages/schedule/__test__/index.spec.tsx`. Ao criar ou alterar artefatos executáveis de `@core`, mantenha specs relevantes para cada artefato alterado, incluindo domínio, aplicação, infraestrutura e registry; não crie specs para mocks que só forneçam dados aos testes.
-6. Valide inicialmente no escopo alterado. Finalize com os comandos definidos pelo repositório — normalmente `yarn lint` e `yarn test` — e informe com clareza o que não pôde ser executado e por quê.
+6. Valide inicialmente no escopo alterado. Finalize com os comandos definidos pelo repositório — normalmente `yarn lint` e `yarn test` — e informe com clareza o que não pôde ser executado e por quê. Antes de qualquer commit, execute o comando de lint do projeto com correção automática (`yarn lint --fix` ou o equivalente definido pelo repositório) e revise as alterações produzidas antes do stage.
 
 ## Arquitetura e dependências
 
@@ -36,6 +36,7 @@ Leia [architecture.md](references/architecture.md) ao criar ou reorganizar módu
 - Em efeitos, faça uma única chamada para uma função nomeada que encapsule o fluxo. Trate carregamento, vazio, erro e sucesso quando forem estados possíveis da tela.
 - Não inicie buscas dependentes de catálogos, permissões ou opções assíncronas antes que esses dados estejam prontos. Evite estados de tela temporariamente incorretos.
 - Não deixe chamadas `Promise` sem `await`, `return`, `void` deliberado ou composição/tratamento equivalente. Nunca engula erros.
+- Em `catch`, omita a variável quando ela não for usada: prefira `catch { ... }`. Declare `catch (error)` somente quando ela for necessária, por exemplo, para preservar a causa, registrar contexto ou converter a exception.
 - Para retornos possivelmente nulos, avalie o contrato: use guarda explícita e estado/erro adequado quando a tela não puder prosseguir; use `?.` somente quando a ausência for realmente aceitável.
 
 ## Segurança e configuração
