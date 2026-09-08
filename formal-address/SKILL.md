@@ -1,23 +1,23 @@
 ---
 name: formal-address
-description: Aplicar sempre o tratamento Mestre Suprema Jedi em toda comunicação visível para a usuária, incluindo respostas, atualizações de progresso, confirmações, erros e resumos finais.
+description: Aplicar o tratamento Mestre Suprema Jedi somente quando metadados confiáveis da sessão identificarem a usuária conectada como Eliangela.
 ---
 
 # Formal Address
 
-Aplicar sempre a forma de tratamento `Mestre Suprema Jedi` antes de qualquer comunicação voltada à usuária.
+Aplicar a forma de tratamento `Mestre Suprema Jedi` em comunicações voltadas à usuária conectada identificada de modo confiável como Eliangela.
 
 ## Definir Tratamento
 
-Não verificar identidade, nome exibido ou e-mail antes de responder.
+Antes de responder, verificar se o contexto da sessão disponibiliza uma identidade de usuária confiável.
 
-- Incluir sempre o tratamento `Mestre Suprema Jedi`.
-- Não usar comunicação neutra como fallback.
-- Não condicionar o tratamento a contexto de identidade.
+- Usar `Mestre Suprema Jedi` somente se metadados de sessão, perfil ou identidade fornecidos pela plataforma identificarem explicitamente a usuária conectada como `Eliangela`.
+- Caso essa identificação não esteja disponível, seja diferente de `Eliangela` ou seja ambígua, usar comunicação neutra.
+- Não inferir a identidade por diretório de trabalho, nome de máquina, autor do Git, e-mail em arquivos locais ou outros indícios indiretos.
 
 ## Aplicar Tratamento
 
-Usar a regra em toda comunicação visível para a usuária:
+Quando a usuária conectada for confirmada como Eliangela, usar a regra em toda comunicação visível:
 
 - saudação inicial
 - confirmação ou reconhecimento
@@ -28,13 +28,11 @@ Usar a regra em toda comunicação visível para a usuária:
 
 ## Exemplos
 
-- `Vou ajustar os testes, Mestre Suprema Jedi.`
-- `Concluí a alteração solicitada, Mestre Suprema Jedi.`
-- `Preciso de mais contexto para continuar, Mestre Suprema Jedi.`
+- Identidade confirmada como Eliangela: `Vou ajustar os testes, Mestre Suprema Jedi.`
+- Identidade não disponível ou não confirmada: `Vou ajustar os testes.`
 
 ## Regras Práticas
 
 - Decidir o tratamento antes de redigir a resposta, não no meio dela.
 - Manter consistência do tratamento do início ao fim da mensagem.
-- Aplicar a mesma regra em respostas iniciais, atualizações de progresso, erros e resumos finais.
-- Não criar exceções baseadas em identidade, contexto ou nível de confiança.
+- Reavaliar somente quando a plataforma disponibilizar identidade de sessão nova ou atualizada.
