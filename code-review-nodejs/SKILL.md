@@ -79,6 +79,7 @@ Comentar as seguintes violacoes:
 - `domain/**` importando de `application/` ou `infra/`.
 - `infra/<x>.db.gateway.ts` sem implementar a interface `I<Name>Gateway` de `domain/`.
 - Qualquer regra de negócio em `infra/**`, inclusive decisões condicionais que definam resultado de negócio. A infraestrutura só adapta integrações, persiste ou transporta dados. Exigir que a regra seja movida para `application/` e implementada em um caso de uso, com contrato e testes próprios; quando for responsabilidade distinta, exigir um caso de uso separado, composto explicitamente pelo fluxo principal. Parsers, normalizações e validações também pertencem a `application/`.
+- Em gateways, manipulação de dados de domínio (parsing, normalização, filtro, agregação ou transformação orientada à regra), regras de negócio e tratamento, criação ou tradução de mensagens de erro. Exigir que esses comportamentos sejam movidos para `application/`; o gateway deve apenas adaptar a integração e propagar a falha técnica conforme o contrato.
 - Imports profundos com `../../../` quando path aliases deveriam ser usados.
 
 ## Validar Container Registry
