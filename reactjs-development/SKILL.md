@@ -24,6 +24,7 @@ Implemente a demanda aderindo à arquitetura e às convenções já presentes no
 - Exponha casos de uso por registries Inversify com símbolos e bindings consistentes com o módulo de referência. A apresentação consome o atalho do registry, nunca importa o arquivo `*.use.case.ts` diretamente.
 - Siga as convenções vigentes para `T` em types, `I` em interfaces, `E` em enums, arquivos de caso de uso em kebab-case, componentes em PascalCase e hooks iniciados por `use`.
 - Use aliases `@core` e `@presentation`, em vez de imports profundos. Agrupe símbolos do mesmo módulo em uma única declaração de import e use `import type` quando aplicável.
+- Não use nem introduza `any` em código de produção, inclusive em props, estado, genéricos, retornos ou casts. O uso fica permitido exclusivamente em testes e mocks. No código de produção, defina um tipo ou interface que represente o contrato; quando isso não for possível com segurança, use `unknown` e estreite o valor antes de usá-lo. Não desabilite regras de TypeScript ou lint para contornar essa exigência.
 
 Leia [architecture.md](references/architecture.md) ao criar ou reorganizar módulos, hooks, gateways, registries, rotas ou configuração. Leia [testing.md](references/testing.md) ao escrever ou ampliar testes.
 
