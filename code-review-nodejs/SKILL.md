@@ -97,7 +97,7 @@ Comentar quando houver:
 - Tipos com prefixo `T`.
 - Interfaces com prefixo `I`.
 - Enums com prefixo `E`.
-- Arquivos de use case em kebab-case e classe em PascalCase.
+- Arquivos de use case em kebab-case e classe derivada exatamente do arquivo: remova `.use.case.ts`, converta os segmentos para PascalCase e acrescente `UseCase` (`get-status.use.case.ts` → `GetStatusUseCase`).
 - Verificar se nomes de classes, DTOs, gateways, services e use cases correspondem fielmente a funcionalidade real implementada.
 - Quando uma classe nova ou alterada tiver nome impreciso, generico ou enganoso para o comportamento presente no diff, comentar e sugerir um nome mais aderente.
 - Tabelas Oracle com prefixo `EGRU_`.

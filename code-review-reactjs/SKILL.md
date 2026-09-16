@@ -43,7 +43,7 @@ Aplicar no diff todas as rules do projeto, mesmo que o pipeline esteja desligado
 | Arquivo | Regra que deve aplicar | Notas |
 |---|---|---|
 | `core-architecture.rule.ts` | Módulo novo em `@core/modules/<mod>/` fora do padrão: comentar. | Pastas permitidas: `application`, `domain`, `infra`, `__mock__`, `__mocks__`; subpastas `__test__`; gateway só em `domain/` ou `infra/` fora de `__test__/` |
-| `use-case-architecture.rule.ts` | Arquivo `<acao>.use.case.ts` em kebab-case, classe exportada `<Acao>UseCase` em PascalCase, dentro de `application/`, sem `copy` no nome. | Qualquer desvio: comentar |
+| `use-case-architecture.rule.ts` | Arquivo `<acao>.use.case.ts` em kebab-case, classe exportada em PascalCase derivada exatamente do arquivo (remover `.use.case.ts`, converter cada segmento kebab-case e acrescentar `UseCase`): `get-status.use.case.ts` → `GetStatusUseCase`; dentro de `application/`, sem `copy` no nome. | Qualquer desvio: comentar |
 | `use-case-import.rule.ts` | `import ... from '*.use.case'` fora de `src/@core/modules/<mod>/infra/*.registry.(ts|js)`: comentar. | Hook/componente deve consumir via registry |
 | `domain-files.rule.ts` | `domain-entities.ts`: só `type/interface/enum`. `domain-entity.ts`: só `class/type/interface`. `domain-gateway.ts`: exatamente uma `interface I*Gateway`. | Qualquer const/função: comentar |
 | `react-usage.rule.ts` | Em `.tsx` de `src/`: lógica aritmética em variável de corpo de componente ou `useEffect` com corpo que não seja uma única chamada de função. | Exigir mover para use case/helper |
@@ -102,7 +102,7 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 - Types com prefixo `T`.
 - Interfaces com prefixo `I`.
 - Enums com prefixo `E`.
-- Use cases em arquivo kebab-case e classe PascalCase.
+- Use cases em arquivo kebab-case e classe derivada exatamente do arquivo: remova `.use.case.ts`, converta os segmentos para PascalCase e acrescente `UseCase` (`get-status.use.case.ts` → `GetStatusUseCase`).
 - Componentes em `PascalCase.tsx`.
 - Hooks em `useNome.tsx`.
 
