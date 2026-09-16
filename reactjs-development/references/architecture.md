@@ -6,15 +6,16 @@ O padrão separa lógica de negócio em `src/@core` e interface em `src/@present
 src/
   @core/modules/<dominio>/
     application/
-    domain/{entity,gateway}/
+    domain/
     infra/
-    __test__/
     __mock__/
   @presentation/
     modules/<dominio>/{page,component,hook,context,route}/
     components/
     config/
 ```
+
+Use `domain/entity` e `domain/gateway` como organização conceitual para separar responsabilidades. Antes de criar essas subpastas fisicamente, confirme que a regra de arquitetura do repositório as permite. No `web-gestor-rural-v2`, as camadas são planas e somente `__test__` é uma subpasta permitida em `application`, `domain` e `infra`.
 
 Adapte a árvore à estrutura já usada pelo projeto; não crie pastas vazias nem camadas paralelas.
 
@@ -31,7 +32,7 @@ Um fluxo típico é: página ou hook chama um atalho do registry; o caso de uso 
 
 ## Registry
 
-Use o registry de infraestrutura do módulo como única fronteira de consumo dos casos de uso. Crie símbolos únicos, faça bindings de contratos e exporte apenas os atalhos que os adaptadores de apresentação precisam. Compare com o módulo equivalente antes de escolher lifecycle ou tipo de binding.
+Use o registry de infraestrutura do módulo como única fronteira de consumo dos casos de uso. Crie símbolos únicos, faça bindings de contratos e exporte apenas os atalhos que os adaptadores de apresentação precisam. Compare com o módulo equivalente antes de escolher lifecycle ou tipo de binding. Mantenha specs em `__test__` da camada ou como arquivo irmão, conforme a regra do projeto.
 
 ```ts
 import { crop } from '@core/modules/crop/infra/crop.container.registry';

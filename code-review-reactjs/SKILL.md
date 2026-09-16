@@ -8,8 +8,7 @@ description: Revisar diffs e branches de projetos frontend web do padrão Eliang
 Aplicar quando o MR for de um projeto **frontend web** do padrão Eliangela
 (ex.: `web-gestor-rural-v2`).
 
-Fonte: `worktrees/web/.claude/rules/architecture.md`, README do projeto e
-`rules/*.rule.ts` do próprio projeto.
+Fonte: README do projeto e `rules/*.rule.ts` do próprio projeto.
 
 ## Fluxo
 
@@ -33,22 +32,23 @@ Aplicar no diff todas as rules do projeto, mesmo que o pipeline esteja desligado
 |---|---|---|
 | `big-file.rule.ts` | Arquivo novo ou modificado **> 200 linhas**: comentar. Se cresceu por inflação sem refator, exigir split. | Permitido em `*.entity(.ies).ts`, `*.http.gateway.ts`, `*.documentation.ts`, `*.container.registry.ts`, `*.constraint.ts`, `*.styles.ts`, `main.ts`, `libs/uniface-orm/`, testes, mocks e lista nominal em `ignoredBigFileFiles` |
 | `long-function.rule.ts` | Função > **60 linhas** em `.ts/.js/.jsx`; **> 200 linhas** em `.tsx`: comentar e sugerir extração. | Permitido em `Dangerfile.ts`, `common/infra/{mock,http}.ts`, páginas nominais de auth/example/form em `@presentation` e lista nominal |
-| `any-param.rule.ts` | Qualquer `any` (`any[]`, `Promise<any>`, etc.) em parâmetro, retorno, generic, cast, variável ou declaração de biblioteca de código de produção: comentar. | Permitido exclusivamente em testes e mocks. Fora desses contextos, exigir tipo/interface que modele o contrato ou, quando isso não for possível com segurança, `unknown` com estreitamento antes do consumo. |
+| `any-param.rule.ts` | `any` em parâmetros de funções: comentar. | Permitido exclusivamente em testes e mocks. Fora desses contextos, exigir tipo/interface que modele o contrato ou, quando isso não for possível com segurança, `unknown` com estreitamento antes do consumo. |
 | `no-comment.rule.ts` | Qualquer comentário em `application/*.use.case.ts`, `domain/**/*.ts`, `infra/**/*.ts` (exceto `.container.ts`) e em qualquer `.ts/.tsx` de `@presentation/`: comentar. | Apenas `/* eslint-disable */` justificado |
 | `inline-style.rule.ts` | `<elem ... style={{` em `.tsx`: comentar e exigir mover para `styles.ts`. | Permitido em `Dangerfile.ts`, `@presentation/components/layout/index.tsx`, `@presentation/components/common/icons/**`, `*.styles.ts` |
-| `core-layer-spec.rule.ts` | Arquivo novo em `@core/<mod>/{application,domain,infra}/` sem spec em `__test__/`: comentar. Spec vazia ou genérica: comentar. | Não exigir spec para mocks, `domain/gateway/*.gateway.ts`, `*.enum.ts`, `key.ts`, módulo `common/` |
+| `core-layer-spec.rule.ts` | Ao tocar um módulo, verificar todos os arquivos de `application`, `domain` e `infra` sem spec correspondente em `__test__/` ou como arquivo irmão: comentar. Spec vazia ou genérica: comentar. | Não exigir spec para mocks e módulo `common/`; `key.ts` também exige spec. |
 
 ### Rules standalone
 
 | Arquivo | Regra que deve aplicar | Notas |
 |---|---|---|
 | `core-architecture.rule.ts` | Módulo novo em `@core/modules/<mod>/` fora do padrão: comentar. | Pastas permitidas: `application`, `domain`, `infra`, `__mock__`, `__mocks__`; subpastas `__test__`; gateway só em `domain/` ou `infra/` fora de `__test__/` |
-| `use-case-architecture.rule.ts` | Arquivo `<acao>.use.case.ts` em kebab-case, classe exportada em PascalCase derivada exatamente do arquivo (remover `.use.case.ts`, converter cada segmento kebab-case e acrescentar `UseCase`): `get-status.use.case.ts` → `GetStatusUseCase`; dentro de `application/`, sem `copy` no nome. | Qualquer desvio: comentar |
+| `use-case-architecture.rule.ts` | Arquivo `<acao>.use.case.ts` em kebab-case, dentro de `application/`, sem `copy` no nome, com classe exportada cujo nome comece pelo PascalCase derivado do arquivo e termine em `UseCase`: `get-status.use.case.ts` → `GetStatusUseCase`. | Qualquer desvio: comentar |
 | `use-case-import.rule.ts` | `import ... from '*.use.case'` fora de `src/@core/modules/<mod>/infra/*.registry.(ts|js)`: comentar. | Hook/componente deve consumir via registry |
 | `domain-files.rule.ts` | `domain-entities.ts`: só `type/interface/enum`. `domain-entity.ts`: só `class/type/interface`. `domain-gateway.ts`: exatamente uma `interface I*Gateway`. | Qualquer const/função: comentar |
 | `react-usage.rule.ts` | Em `.tsx` de `src/`: lógica aritmética em variável de corpo de componente ou `useEffect` com corpo que não seja uma única chamada de função. | Exigir mover para use case/helper |
-| `no-inline-function-in-jsx.rule.ts` | Função inline em prop JSX com **> 3 linhas**: comentar. | Sugerir `useCallback` ou helper |
 | `run-react-usage.js` | Runner standalone para `react-usage.rule.ts`. | Aplicar no diff também |
+
+As regras standalone executadas por `run-react-usage.js` percorrem o repositório, não apenas o diff. Reporte violações fora do diff como dívida preexistente ou bloqueio do runner, sem classificá-las como finding introduzido pela alteração revisada.
 
 ## Camadas e responsabilidades
 
@@ -65,14 +65,15 @@ Aplicar no diff todas as rules do projeto, mesmo que o pipeline esteja desligado
 
 ```text
 application/<acao>.use.case.ts
-domain/entity/<name>.entity.ts
-domain/entity/<name>.entities.ts
-domain/gateway/<name>.gateway.ts
+domain/<name>.entity.ts
+domain/<name>.entities.ts
+domain/<name>.gateway.ts
 infra/<name>.http.gateway.ts
 infra/<name>.container.registry.ts
-__test__/*.spec.ts
 __mock__/
 ```
+
+`domain/entity` e `domain/gateway` podem orientar a organização conceitual de um módulo. Antes de sugerir ou aceitar essas subpastas fisicamente, confirme que a regra de arquitetura do repositório as permite; no `web-gestor-rural-v2`, as camadas são planas e apenas `__test__` é uma subpasta permitida.
 
 ## Violações arquiteturais que deve apontar
 
