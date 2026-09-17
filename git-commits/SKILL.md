@@ -68,7 +68,10 @@ Use esta skill quando a tarefa envolver preparar, revisar, sugerir ou criar comm
   3. Alterar Minor
   4. Alterar Major
 - Execute a release escolhida antes de preparar o commit: Patch com `yarn release:hotfix`, Minor com `yarn release:minor` e Major com `yarn release:major`.
-- Se a usuária escolher `Não`, siga diretamente com a revisão, stage e commit. Se escolher uma alteração de versão, revise novamente o estado do repositório e inclua no commit as alterações de versão pertinentes.
+- Em projetos Node.js ou React, verifique se existe um arquivo `VERSION` na raiz do projeto. Se existir, seu conteúdo deve ser exatamente a versão de `package.json` (incluindo a atualização gerada pela release).
+- Antes do commit, compare `VERSION` com o campo `version` de `package.json` quando ambos existirem. Corrija `VERSION` se houver divergência e inclua a correção no mesmo commit.
+- Ao realizar uma alteração de versão, atualize também `VERSION` para receber exatamente a nova versão de `package.json` e inclua ambos os arquivos no commit.
+- Se a usuária escolher `Não`, após essa verificação de consistência siga com a revisão, stage e commit. Se escolher uma alteração de versão, revise novamente o estado do repositório e inclua no commit as alterações de versão pertinentes, inclusive `VERSION` quando existir.
 - Antes de criar o commit, confira se a mensagem segue exatamente o padrão esperado pelo repositório para evitar falha em hooks como `commit-msg`.
 - Se estiver usando `yarn commit` ou ferramenta equivalente, preencha o tipo e o escopo conforme a convenção vigente no projeto.
 - Se houver contexto importante, preencha também o corpo da mensagem com uma descrição detalhada.
