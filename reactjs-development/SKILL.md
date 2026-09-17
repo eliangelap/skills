@@ -41,6 +41,7 @@ Leia [architecture.md](references/architecture.md) ao criar ou reorganizar módu
 - Não deixe chamadas `Promise` sem `await`, `return`, `void` deliberado ou composição/tratamento equivalente. Nunca engula erros.
 - Em `catch`, omita a variável quando ela não for usada: prefira `catch { ... }`. Declare `catch (error)` somente quando ela for necessária, por exemplo, para preservar a causa, registrar contexto ou converter a exception.
 - Para retornos possivelmente nulos, avalie o contrato: use guarda explícita e estado/erro adequado quando a tela não puder prosseguir; use `?.` somente quando a ausência for realmente aceitável.
+- Ao criar ou alterar uma mensagem de erro ou aviso, confirme que seu texto descreve corretamente a condição que a acionou e o contexto da operação. A mensagem deve ser clara e útil para a pessoa usuária, compatível com o estado mostrado na tela e sem revelar detalhes técnicos, stack traces, PII ou segredos. Diferencie falha, validação, indisponibilidade e aviso não bloqueante conforme o comportamento real do fluxo.
 
 ## Segurança e configuração
 

@@ -111,6 +111,7 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 
 - Token de auth deve vir do contexto/interceptor, não de `localStorage` manual.
 - Rotas protegidas devem estar corretamente guardadas em `routes.tsx`.
+- Verificar se toda mensagem de erro ou aviso nova ou alterada é coerente com a condição que a dispara e com o contexto da operação. Apontar mensagens genéricas, contraditórias, atribuídas à causa errada ou que indiquem sucesso/continuidade quando o fluxo falhou; exigir texto claro, acionável quando aplicável e compatível com o estado exibido pela UI. Não expor detalhes técnicos, stack traces, PII ou segredos à pessoa usuária.
 - `console.log` em produção deve ser apontado.
 - Nunca logar PII como CPF ou e-mail completo.
 - Apontar registros de observabilidade com mensagem ou evento genérico, como `erro ao processar`, que não identifiquem a operação nem tragam contexto técnico seguro para diagnóstico. Exigir operação, identificador técnico não sensível quando aplicável, código/categoria e causa do erro.
