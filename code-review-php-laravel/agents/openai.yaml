@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review PHP/Laravel"
+  short_description: "Review de APIs PHP e Laravel"
+  default_prompt: "Use $code-review-php-laravel para revisar este diff de API PHP/Laravel."
