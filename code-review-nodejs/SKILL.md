@@ -105,6 +105,7 @@ Comentar quando houver:
 
 ## Validar Entities
 
+- Comentar quando duas ou mais entidades de ORM forem declaradas no mesmo arquivo. Exigir um arquivo `*.entity.ts` por entidade; por exemplo, `PESSOA` e `ENDERECO` devem ficar em `people.entity.ts` e `address.entity.ts`, respectivamente.
 - Exigir extensao de `BaseEntity` do projeto.
 - Tratar soft delete por `deletedAt`; comentar hard delete sem justificativa.
 - Nunca aceitar geracao manual de UUID v7 em use case.

@@ -77,6 +77,7 @@ __mock__/
 
 ## Violações arquiteturais que deve apontar
 
+- Duas ou mais entidades de ORM declaradas no mesmo arquivo. Exigir um arquivo `*.entity.ts` por entidade; por exemplo, `PESSOA` e `ENDERECO` devem ficar em `people.entity.ts` e `address.entity.ts`, respectivamente.
 - `@presentation/**` importando use case diretamente em vez de registry.
 - `@core/**` importando `react`, `react-router`, `antd` ou `react-hook-form`.
 - `application/<x>.use.case.ts` fazendo `axios` direto em vez de gateway.
