@@ -61,6 +61,8 @@ As regras standalone executadas por `run-react-usage.js` percorrem o repositóri
 
 **Regra de ouro:** zero React em `@core` e zero lógica de cálculo/negócio em `.tsx`.
 
+Quando o diff incluir migrations, verificar que cada migration está em arquivo próprio. Só aceitar operações agrupadas no mesmo arquivo se alterarem a mesma tabela ou precisarem compor uma única transação inseparável; apontar alterações independentes de tabelas ou transações distintas agrupadas na mesma migration.
+
 ## Estrutura esperada de `@core/modules/<dom>/`
 
 ```text

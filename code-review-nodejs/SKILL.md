@@ -152,6 +152,7 @@ Nao apontar como erro os seguintes padroes idiomaticos de TypeORM usados no mape
 - Vetar `synchronize: true` em DataSource.
 - Exigir migration para mudanca de schema.
 - Confirmar nome de migration no padrao do projeto.
+- Comentar migrations que agrupem alterações independentes. Cada migration deve estar em arquivo próprio; só aceitar operações agrupadas quando alterarem a mesma tabela ou precisarem compor uma única transação inseparável.
 - Exigir producers derivados de `BaseProducer` e consumers de `BaseConsumer`.
 - Exigir payload no envelope pattern do projeto.
 - Exigir `obs.ts` para context propagation.
