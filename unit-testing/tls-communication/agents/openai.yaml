@@ -1,0 +1,4 @@
+interface:
+  display_name: "Comunicação TLS"
+  short_description: "Implemente clientes TLS e mTLS seguros."
+  default_prompt: "Use $tls-communication para implementar ou diagnosticar uma comunicação TLS."

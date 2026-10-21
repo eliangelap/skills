@@ -1,0 +1,4 @@
+interface:
+  display_name: "Laravel Code Review"
+  short_description: "Revisa alterações PHP e Laravel."
+  default_prompt: "Use $code-review-laravel para revisar as alterações atuais."

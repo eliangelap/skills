@@ -1,0 +1,1 @@
+SELECT i.owner,i.table_name,i.index_name,i.uniqueness,ic.column_position,ic.column_name FROM all_indexes i JOIN all_ind_columns ic ON ic.index_owner=i.owner AND ic.index_name=i.index_name WHERE i.table_owner=UPPER('&OWNER') ORDER BY i.table_name,i.index_name,ic.column_position;

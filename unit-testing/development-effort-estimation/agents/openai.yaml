@@ -1,0 +1,4 @@
+interface:
+  display_name: "Estimativa de Esforço"
+  short_description: "Estime esforço de desenvolvimento com realismo"
+  default_prompt: "Use $development-effort-estimation para estimar esta demanda com base no repositório atual."

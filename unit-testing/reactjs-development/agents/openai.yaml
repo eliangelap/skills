@@ -1,0 +1,4 @@
+interface:
+  display_name: "Desenvolvimento ReactJS"
+  short_description: "Desenvolva frontends React em camadas"
+  default_prompt: "Use $reactjs-development para implementar esta demanda no frontend."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Desenvolvimento Java"
+  short_description: "Java 22, Spring Boot e Clean Architecture"
+  default_prompt: "Use $java-development para implementar esta demanda em Java com Spring Boot."
