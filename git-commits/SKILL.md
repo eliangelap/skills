@@ -12,6 +12,7 @@ Use esta skill quando a tarefa envolver preparar, revisar, sugerir ou criar comm
 - Quando a usuária pedir para `criar o commit`, `fazer o commit`, `commitar` ou equivalente, a ação padrão deve ser executar o fluxo completo de commit, e não apenas sugerir a mensagem.
 - Só responda apenas com proposta de mensagem quando a usuária pedir explicitamente uma sugestão, revisão da mensagem, ou quando ainda não estiver claro quais arquivos devem entrar no commit.
 - Antes de commitar, revise o estado do repositório e inclua todas as alterações presentes — rastreadas, não rastreadas, staged ou não — usando `git add -A` antes de criar o commit.
+- Arquivos ignorados por qualquer `.gitignore` não devem ser incluídos no commit nem adicionados com `git add --force`/`-f`. Só faça essa exceção quando a usuária solicitar explicitamente o envio do arquivo ignorado.
 - O resultado padrão de um commit deve deixar o worktree limpo. Não preserve alterações para depois nem separe arquivos em commits distintos por iniciativa própria.
 - A única exceção é quando a usuária indicar explicitamente que um ou mais arquivos não devem ser enviados no commit. Preserve somente esses arquivos fora do stage e informe que eles permaneceram no worktree.
 - Depois de criar o commit, informe o hash gerado, o título final e se hooks automáticos alteraram arquivos durante o processo.
