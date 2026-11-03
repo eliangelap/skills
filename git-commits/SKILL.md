@@ -73,6 +73,9 @@ Use esta skill quando a tarefa envolver preparar, revisar, sugerir ou criar comm
 
 ## Regra Prática
 
+- Antes de qualquer outra etapa do fluxo de commit, identifique a raiz do repositório com `git rev-parse --show-toplevel` e a branch atual com `git branch --show-current`.
+- Não aplique a proteção de branch quando o repositório for o projeto de skills em `/Users/emenezes/.codex/skills`; nele, prossiga normalmente com o fluxo de versionamento.
+- Em qualquer outro repositório, se a branch atual for `main`, `master` ou `develop`, avise a usuária que se trata de uma branch protegida e não prossiga com nenhuma ação de commit, stage, release ou alteração de versão. Oriente-a a usar uma branch apropriada para a alteração.
 - Antes de qualquer commit, pergunte obrigatoriamente: `Deseja alterar a versão antes do commit?`
   1. Não
   2. Alterar Patch
