@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitLab MR Thread Replies"
+  short_description: "Responder discussões de code review no GitLab"
+  default_prompt: "Responda as threads de code review deste Merge Request usando glab."
