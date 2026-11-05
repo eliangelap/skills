@@ -7,6 +7,12 @@ description: Analise e responda threads não resolvidas de code review em Merge 
 
 Trate o MR como um ciclo de análise, proposta aprovada, correção e retorno às threads. Alterações no código, commits, pushes e comentários no GitLab são ações externas: não as execute antes da aprovação explícita do plano pela pessoa usuária.
 
+## Execução do `glab`
+
+Execute **toda** chamada ao `glab` fora do isolamento, com `sandbox_permissions: "require_escalated"`, para que o CLI reutilize a mesma credencial local configurada para a pessoa usuária. Isso se aplica tanto às consultas (`glab mr view` e `glab api`) quanto às publicações de notas. Informe uma justificativa curta e específica ao solicitar a elevação, sem ler, imprimir, copiar ou substituir credenciais manualmente.
+
+Não substitua o `glab` por `curl` ou outro cliente HTTP para contornar o isolamento: a autenticação deve permanecer sob gerenciamento do próprio `glab` e do armazenamento de credenciais local.
+
 ## Identificar o MR e as threads
 
 Execute os comandos dentro do checkout do projeto para que `:fullpath` seja resolvido pelo `glab`. Quando o MR não estiver inequívoco, peça o IID ou a URL; quando estiver claro, consulte seus dados antes de publicar:
