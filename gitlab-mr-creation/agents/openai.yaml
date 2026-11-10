@@ -1,0 +1,4 @@
+interface:
+  display_name: "Criação de MR GitLab"
+  short_description: "Criar Merge Requests detalhados no GitLab"
+  default_prompt: "Use $gitlab-mr-creation para criar este Merge Request no GitLab."
