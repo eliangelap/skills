@@ -15,15 +15,16 @@ Execute os comandos abaixo no diretório do repositório-alvo. Os exemplos usam 
 
 ### Identificar repositório, autenticação e assignee
 
-Para obter metadados de forma estruturada de maneira compatível com o CLI, use `glab api` com o placeholder `:fullpath`, que representa o projeto do repositório Git atual:
+Para obter metadados de forma estruturada de maneira compatível com o CLI, use `glab api` com o placeholder `:fullpath`, que representa o projeto do repositório Git atual. `glab api` não oferece a opção `--jq`; processe sua saída JSON com `jq -er`. O `pipefail` faz a atribuição falhar se a chamada da API ou a extração do campo falhar.
 
 ```bash
 git rev-parse --show-toplevel
 git remote get-url origin
 glab auth status
-project_path="$(glab api projects/:fullpath --jq '.path_with_namespace')"
-target_branch="$(glab api projects/:fullpath --jq '.default_branch')"
-assignee="$(glab api user --jq '.username')"
+set -o pipefail
+project_path="$(glab api projects/:fullpath | jq -er '.path_with_namespace')"
+target_branch="$(glab api projects/:fullpath | jq -er '.default_branch')"
+assignee="$(glab api user | jq -er '.username')"
 ```
 
 Se `project_path`, `target_branch` ou `assignee` estiver vazio, ou qualquer comando falhar, interrompa o fluxo e resolva a autenticação, o remote ou o repositório antes de criar o MR. Use exatamente o `username` retornado em `assignee`; não fixe um nome de usuário e não presuma que `@me` será interpretado da mesma forma em todas as versões do CLI.
