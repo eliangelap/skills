@@ -11,19 +11,42 @@ Crie o Merge Request com `glab`. A pessoa autenticada no `glab` deve ser sempre 
 
 Sempre execute qualquer comando `glab` fora do sandbox, com `sandbox_permissions: "require_escalated"`, inclusive consultas, criação e confirmação do MR. Isso permite reutilizar a credencial local da pessoa usuária. Não use `curl`, tokens ou outros clientes HTTP como alternativa.
 
-Antes de criar o MR, confirme que o repositório atual e a autenticação estão corretos:
+Execute os comandos abaixo no diretório do repositório-alvo. Os exemplos usam variáveis de shell apenas para evitar que informações obtidas em uma etapa sejam redigitadas ou presumidas nas etapas seguintes.
+
+### Identificar repositório, autenticação e assignee
+
+Para obter metadados de forma estruturada de maneira compatível com o CLI, use `glab api` com o placeholder `:fullpath`, que representa o projeto do repositório Git atual:
 
 ```bash
+git rev-parse --show-toplevel
+git remote get-url origin
 glab auth status
-glab repo view --json path_with_namespace,default_branch
-glab api user --jq '.username'
+project_path="$(glab api projects/:fullpath --jq '.path_with_namespace')"
+target_branch="$(glab api projects/:fullpath --jq '.default_branch')"
+assignee="$(glab api user --jq '.username')"
 ```
 
-Use o `username` retornado por `glab api user` como assignee. Não fixe um nome de usuário e não presuma que `@me` será interpretado da mesma forma em todas as versões do CLI.
+Se `project_path`, `target_branch` ou `assignee` estiver vazio, ou qualquer comando falhar, interrompa o fluxo e resolva a autenticação, o remote ou o repositório antes de criar o MR. Use exatamente o `username` retornado em `assignee`; não fixe um nome de usuário e não presuma que `@me` será interpretado da mesma forma em todas as versões do CLI.
 
 ## Preparar o MR
 
-Identifique a branch de origem atual e a branch de destino solicitada. Se não houver destino informado, use a branch padrão do repositório. Confira se a branch de origem possui commits e alterações relevantes em relação ao destino. Não é necessário verificar previamente se já existe MR aberto para a branch.
+Identifique a branch de origem atual. Se a pessoa usuária informar uma branch de destino, ela substitui o valor obtido para `target_branch`; caso contrário, use a branch padrão obtida da API. Não crie MR a partir de HEAD destacado ou quando origem e destino forem iguais.
+
+```bash
+source_branch="$(git branch --show-current)"
+test -n "$source_branch"
+test "$source_branch" != "$target_branch"
+git rev-parse --verify --quiet "${target_branch}^{commit}"
+git rev-parse --verify --quiet "${source_branch}^{commit}"
+git log --oneline "${target_branch}..${source_branch}"
+git diff --stat "${target_branch}...${source_branch}"
+git diff --check "${target_branch}...${source_branch}"
+git ls-remote --exit-code --heads origin "$source_branch"
+```
+
+Os comandos de comparação devem evidenciar os commits e o diff que serão publicados. Se não houver commits ou diff relevantes, pare e informe a situação. `git ls-remote` confirma que a branch de origem já está publicada, sem realizar push. Se a branch ainda não existir no remoto, peça autorização explícita para fazer push — a criação do MR não deve publicar a branch implicitamente.
+
+Não é necessário consultar previamente se existe MR aberto para a branch. Essa consulta fica reservada para recuperar com segurança uma possível criação após uma falha.
 
 Não faça push, commit, alteração de código, adicione labels, reviewers, milestone ou configure auto-merge, salvo quando isso tiver sido solicitado ou já fizer parte do escopo aprovado.
 
@@ -74,17 +97,77 @@ Considere como hotfix somente quando a pessoa usuária o indicar ou houver evid�
 
 Explique com precisão o que foi corrigido, a causa ou motivação conhecida, o impacto e as verificações. Não declare causa-raiz se ela não tiver sido comprovada.
 
-## Criar e confirmar
+## Criar, recuperar de falha e confirmar
 
-Monte a descrição em um arquivo temporário para preservar quebras de linha e Markdown. Em seguida, crie o MR, incluindo explicitamente a atribuição à pessoa autenticada:
+Monte a descrição em um arquivo temporário para preservar quebras de linha e Markdown. Substitua o conteúdo entre `EOF` pela descrição baseada nas evidências reunidas. O `trap` remove somente esse arquivo temporário ao término do shell.
+
+```bash
+description_file="$(mktemp "${TMPDIR:-/tmp}/gitlab-mr-description.XXXXXX.md")"
+trap 'rm -f "$description_file"' EXIT
+
+cat > "$description_file" <<'EOF'
+## Contexto
+
+<contexto confirmado>
+
+## Requisitos atendidos
+
+- <requisito confirmado>
+
+## Implementação
+
+- <mudança confirmada>
+
+## Motivos e impacto
+
+- <motivo e impacto confirmados>
+
+## Pontos de atenção
+
+- <risco, dependência ou lacuna conhecida>
+
+## Validação
+
+- <testes executados ou motivo de não execução>
+EOF
+```
+
+Crie o MR com todas as opções que evitam interação e efeitos colaterais não solicitados. `--push=false` é explícito para que o comando nunca publique a branch; `--yes` apenas confirma a submissão já inteiramente parametrizada.
 
 ```bash
 glab mr create \
   --source-branch "<branch-origem>" \
   --target-branch "<branch-destino>" \
   --title "<título em português>" \
-  --description-file "<arquivo-temporário>" \
-  --assignee "<username-autenticado>"
+  --description-file "$description_file" \
+  --assignee "$assignee" \
+  --push=false \
+  --yes
 ```
 
-Depois, consulte o MR criado com `glab mr view` e confirme IID, URL, branches e assignee. Informe esses dados à pessoa usuária juntamente com um resumo conciso do conteúdo publicado. Se a criação falhar, informe o erro e não tente criar o MR novamente sem antes verificar se a primeira tentativa já o criou.
+Defina `mr_title` com o título em português derivado das evidências e, na execução real, use as variáveis já verificadas:
+
+```bash
+mr_title="<título em português baseado no diff e na demanda>"
+
+glab mr create \
+  --source-branch "$source_branch" \
+  --target-branch "$target_branch" \
+  --title "$mr_title" \
+  --description-file "$description_file" \
+  --assignee "$assignee" \
+  --push=false \
+  --yes
+```
+
+Depois da criação, consulte o MR pela branch de origem e confirme IID, URL, branches e assignee com saída estruturada:
+
+```bash
+glab mr view "$source_branch" \
+  --output json \
+  --jq '{iid, web_url, source_branch, target_branch, assignees: [.assignees[].username]}'
+```
+
+Se `glab mr create` falhar, guarde o erro da tentativa e não a repita. Primeiro verifique se a criação foi concluída apesar da falha, usando o mesmo comando de consulta. Se houver MR, confirme seus dados e informe-o; se a consulta não encontrar MR, informe o erro original e peça orientação antes de uma nova tentativa.
+
+Informe à pessoa usuária IID, URL, branches e assignee, juntamente com um resumo conciso do conteúdo publicado.
