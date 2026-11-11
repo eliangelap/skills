@@ -9,7 +9,7 @@ Crie o Merge Request com `glab`. A pessoa autenticada no `glab` deve ser sempre 
 
 ## Execução com `glab`
 
-Execute todas as chamadas ao `glab` fora do isolamento, com `sandbox_permissions: "require_escalated"`, para reutilizar a credencial local da pessoa usuária. Não use `curl`, tokens ou outros clientes HTTP como alternativa.
+Sempre execute qualquer comando `glab` fora do sandbox, com `sandbox_permissions: "require_escalated"`, inclusive consultas, criação e confirmação do MR. Isso permite reutilizar a credencial local da pessoa usuária. Não use `curl`, tokens ou outros clientes HTTP como alternativa.
 
 Antes de criar o MR, confirme que o repositório atual e a autenticação estão corretos:
 
