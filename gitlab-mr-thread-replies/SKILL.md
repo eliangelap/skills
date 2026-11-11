@@ -33,7 +33,7 @@ Antes de corrigir código, commitar, fazer push ou publicar qualquer resposta, m
 ```markdown
 | Thread | Resumo | Procede? | Proposta |
 | --- | --- | --- | --- |
-| `<discussion-id>` | Resumo curto do apontamento | Sim | Corrigir `<componente>` e responder com o hash do commit e o resumo. |
+| `<discussion-id>` | Resumo curto do apontamento | Sim | Corrigir `<componente>`, fazer commit e push, responder com o hash e marcar a thread como resolvida. |
 | `<discussion-id>` | Resumo curto do apontamento | Não | Responder que `<motivo técnico verificável>`. |
 ```
 
@@ -64,6 +64,14 @@ glab api --method POST \
 
 Use `--raw-field` para que o `glab` codifique o texto com segurança no JSON. Para várias threads, relacione cada resposta ao respectivo `discussion-id`; nunca reutilize o ID da nota original como se fosse o ID da discussão.
 
-Após publicar, confirme a nota retornada pela API ou recarregue a discussão. Informe quais threads receberam resposta, seus respectivos hashes quando houver correção, e quaisquer threads deliberadamente ignoradas. Não marque uma discussão como resolvida só porque respondeu; faça isso somente se for solicitado explicitamente e após confirmar que a resolução é apropriada.
+Após publicar, confirme a nota retornada pela API ou recarregue a discussão. Para cada thread procedente, marque-a como resolvida somente depois de confirmar que: a correção foi commitada e enviada por `git push`; a resposta com o hash foi publicada; e a resolução é apropriada ao apontamento. Faça isso com o ID da discussão:
+
+```bash
+glab api --method PUT \
+  "projects/:fullpath/merge_requests/<iid>/discussions/<discussion-id>" \
+  --raw-field "resolved=true"
+```
+
+Confirme a discussão retornada pela API ou recarregue-a e verifique `resolved: true`. Não resolva threads que não procedem apenas por ter publicado a justificativa, nem threads cuja correção, commit, push ou resposta tenha falhado. Informe quais threads receberam resposta e foram resolvidas, seus respectivos hashes quando houver correção, e quaisquer threads deliberadamente ignoradas ou mantidas abertas.
 
 Se houver ambiguidade material sobre quais comentários responder, sobre a mensagem a publicar, ou sobre a aprovação do plano, apresente o resumo das threads relevantes e peça orientação antes de agir.
