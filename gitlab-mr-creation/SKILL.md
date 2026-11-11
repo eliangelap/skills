@@ -23,7 +23,7 @@ Use o `username` retornado por `glab api user` como assignee. Não fixe um nome 
 
 ## Preparar o MR
 
-Identifique a branch de origem atual e a branch de destino solicitada. Se não houver destino informado, use a branch padrão do repositório. Confira se a branch de origem possui commits e alterações relevantes em relação ao destino e se já não existe MR aberto para ela. Não crie um MR duplicado: apresente o MR existente à pessoa usuária.
+Identifique a branch de origem atual e a branch de destino solicitada. Se não houver destino informado, use a branch padrão do repositório. Confira se a branch de origem possui commits e alterações relevantes em relação ao destino. Não é necessário verificar previamente se já existe MR aberto para a branch.
 
 Não faça push, commit, alteração de código, adicione labels, reviewers, milestone ou configure auto-merge, salvo quando isso tiver sido solicitado ou já fizer parte do escopo aprovado.
 
