@@ -5,73 +5,93 @@ description: Analise e responda threads não resolvidas de code review em Merge 
 
 # GitLab MR Thread Replies
 
-Trate o MR como um ciclo de análise, proposta aprovada, correção e retorno às threads. Alterações no código, commits, pushes e comentários no GitLab são ações externas: não as execute antes da aprovação explícita do plano pela pessoa usuária.
+Trate o MR como um ciclo de análise, proposta aprovada, correção e retorno às threads. Alterações no código, commits, pushes, respostas e resolução de threads são ações externas: não as execute antes da aprovação explícita do plano pela pessoa usuária.
 
 ## Execução do `glab`
 
-Execute **toda** chamada ao `glab` fora do isolamento, com `sandbox_permissions: "require_escalated"`, para que o CLI reutilize a mesma credencial local configurada para a pessoa usuária. Isso se aplica tanto às consultas (`glab mr view` e `glab api`) quanto às publicações de notas. Informe uma justificativa curta e específica ao solicitar a elevação, sem ler, imprimir, copiar ou substituir credenciais manualmente.
+Execute toda chamada ao `glab` fora do sandbox, com `sandbox_permissions: "require_escalated"`, para reutilizar a credencial local da pessoa usuária. A justificativa da elevação deve ser curta e específica. Não leia, imprima, copie ou substitua credenciais manualmente e não use `curl` ou outro cliente HTTP como alternativa.
 
-Não substitua o `glab` por `curl` ou outro cliente HTTP para contornar o isolamento: a autenticação deve permanecer sob gerenciamento do próprio `glab` e do armazenamento de credenciais local.
+Os subcomandos `glab mr note` são experimentais nesta versão do CLI, mas são a interface nativa para listar, responder e resolver discussões. Use-os no checkout do projeto e informe o IID explicitamente quando ele for conhecido.
 
-## Identificar o MR e as threads
+## Mapa de comandos
 
-Execute os comandos dentro do checkout do projeto para que `:fullpath` seja resolvido pelo `glab`. Quando o MR não estiver inequívoco, peça o IID ou a URL; quando estiver claro, consulte seus dados antes de publicar:
+| Tarefa | Comando validado |
+| --- | --- |
+| Consultar os dados do MR | `glab mr view "$mr_iid" --output json --jq '{iid, title, web_url, source_branch, target_branch}'` |
+| Examinar o patch do MR | `glab mr diff "$mr_iid" --color=never` |
+| Listar apenas threads abertas | `glab mr note list "$mr_iid" --state unresolved --output json` |
+| Listar todas as discussões para confirmação | `glab mr note list "$mr_iid" --state all --output json` |
+| Responder a uma thread existente | `glab mr note create "$mr_iid" --reply "$discussion_id" --message "$reply_body"` |
+| Resolver uma thread | `glab mr note resolve "$mr_iid" "$discussion_id"` |
+| Reabrir uma thread, se a pessoa usuária pedir | `glab mr note reopen "$mr_iid" "$discussion_id"` |
+
+Não use `glab mr view --json`: nesta versão a opção correta é `--output json`. Não use `glab mr note create` sem `--reply` para responder uma discussão, pois isso cria uma nova thread. O argumento de `--reply`, `resolve` e `reopen` é o ID da discussão; pode ser o ID completo ou um prefixo único de pelo menos oito caracteres. Prefira o ID completo presente no JSON.
+
+## Identificar e analisar threads
+
+Quando o MR não estiver inequívoco, peça o IID ou a URL. Quando estiver claro, defina e consulte-o antes de propor qualquer ação:
 
 ```bash
-glab mr view <iid> --json iid,title,web_url
-glab api --paginate "projects/:fullpath/merge_requests/<iid>/discussions"
+mr_iid="<iid-do-mr>"
+
+glab mr view "$mr_iid" \
+  --output json \
+  --jq '{iid, title, web_url, source_branch, target_branch}'
+glab mr note list "$mr_iid" --state unresolved --output json
+glab mr diff "$mr_iid" --color=never
 ```
 
-Leia o MR e examine cada discussão e suas `notes`. Use o `id` da discussão (não o ID individual de uma nota), diferencie comentários de linha, comentários gerais e notas de sistema, e concentre a análise nas threads não resolvidas. Não responda ou altere threads já resolvidas, a menos que a pessoa tenha pedido isso.
+Examine cada discussão e suas notas. Diferencie comentários de linha, gerais e notas de sistema; concentre a análise em threads não resolvidas. Não responda nem altere threads já resolvidas, salvo pedido explícito.
 
-Analise o código, o diff e o contexto de cada apontamento para decidir se ele procede. Não presuma que um comentário do revisor está correto, nem descarte um apontamento sem uma justificativa técnica verificável.
+Analise o código, o patch e o contexto de cada apontamento. Não presuma que um comentário procede nem o descarte sem justificativa técnica verificável. Guarde o `id` da discussão, não o ID individual de uma nota, para responder e resolver.
 
 ## Plano para aprovação
 
-Antes de corrigir código, commitar, fazer push ou publicar qualquer resposta, mostre um plano em Markdown e aguarde aprovação explícita. Use uma tabela com **uma thread por linha**, mesmo quando mais de uma tiver a mesma solução:
+Antes de corrigir código, commitar, fazer push, responder ou resolver threads, mostre um plano em Markdown e aguarde aprovação explícita. Use uma linha por thread, mesmo que uma correção resolva várias:
 
 ```markdown
 | Thread | Resumo | Procede? | Proposta |
 | --- | --- | --- | --- |
-| `<discussion-id>` | Resumo curto do apontamento | Sim | Corrigir `<componente>`, fazer commit e push, responder com o hash e marcar a thread como resolvida. |
-| `<discussion-id>` | Resumo curto do apontamento | Não | Responder que `<motivo técnico verificável>`. |
+| `<discussion-id>` | Resumo curto do apontamento | Sim | Corrigir `<componente>`, validar, fazer commit e push, responder com o hash e resolver a thread. |
+| `<discussion-id>` | Resumo curto do apontamento | Não | Responder com `<motivo técnico verificável>` e manter a thread aberta. |
 ```
 
-Explique o diagnóstico de forma suficiente para a decisão da pessoa usuária. Se a análise depender de informação ausente ou houver dúvida material sobre o comportamento esperado, exponha-a no plano e peça esclarecimento em vez de escolher uma correção por conta própria.
+Explique o diagnóstico na medida necessária para a decisão. Se houver informação ausente ou dúvida material sobre o comportamento esperado, exponha-a no plano e peça esclarecimento em vez de escolher a correção.
 
 ## Executar correções aprovadas
 
-Para cada thread aprovada como procedente, use a skill de desenvolvimento disponível e compatível com a linguagem e a camada do projeto antes de modificar o código. Quando a alteração atravessar mais de uma camada, use as skills adequadas a cada uma. Se não houver uma skill de desenvolvimento compatível disponível, avise a pessoa usuária dessa ausência antes de implementar; não apresente uma skill de review como se ela autorizasse ou substituísse uma skill de desenvolvimento.
+Para cada thread aprovada como procedente, use a skill de desenvolvimento compatível com a linguagem e a camada do projeto antes de modificar código. Se não houver uma skill compatível, avise antes de implementar; uma skill de review não a substitui.
 
-Implemente e valide a correção conforme a skill aplicável. Faça commit e push da correção antes de responder à thread. Mantenha a relação entre cada thread e sua alteração inequívoca; se uma única alteração resolve várias threads, registre o mesmo hash em cada resposta e deixe isso explícito. Obtenha o hash já enviado com:
+Implemente e valide a correção. Faça commit e push antes de responder à thread. Mantenha inequívoca a relação entre cada thread e sua alteração; se um commit resolver várias, registre o mesmo hash em cada resposta.
 
 ```bash
 git rev-parse --short HEAD
 git push
 ```
 
-## Redigir e publicar
+## Responder, confirmar e resolver
 
-Para um apontamento procedente, responda com o hash do commit enviado e um resumo conciso da solução. Para um apontamento que não procede, responda tecnicamente por que não haverá correção, com base na análise realizada. Não alegue que uma correção foi implementada ou validada sem evidência. Mantenha a língua e o tom predominantes da thread, salvo orientação contrária.
+Para um apontamento procedente, mencione o hash enviado e resuma a solução. Para um apontamento que não procede, explique tecnicamente por que não haverá correção. Não alegue implementação ou validação sem evidência. Mantenha a língua e o tom predominantes da thread, salvo orientação contrária.
 
-Publique uma resposta como uma nova nota da discussão:
-
-```bash
-glab api --method POST \
-  "projects/:fullpath/merge_requests/<iid>/discussions/<discussion-id>/notes" \
-  --raw-field "body=<resposta>"
-```
-
-Use `--raw-field` para que o `glab` codifique o texto com segurança no JSON. Para várias threads, relacione cada resposta ao respectivo `discussion-id`; nunca reutilize o ID da nota original como se fosse o ID da discussão.
-
-Após publicar, confirme a nota retornada pela API ou recarregue a discussão. Para cada thread procedente, marque-a como resolvida somente depois de confirmar que: a correção foi commitada e enviada por `git push`; a resposta com o hash foi publicada; e a resolução é apropriada ao apontamento. Faça isso com o ID da discussão:
+Defina a mensagem em variável para preservar caracteres especiais e publique uma resposta na discussão existente:
 
 ```bash
-glab api --method PUT \
-  "projects/:fullpath/merge_requests/<iid>/discussions/<discussion-id>" \
-  --raw-field "resolved=true"
+discussion_id="<id-completo-da-discussao>"
+reply_body="<resposta baseada na análise aprovada>"
+
+glab mr note create "$mr_iid" \
+  --reply "$discussion_id" \
+  --message "$reply_body"
 ```
 
-Confirme a discussão retornada pela API ou recarregue-a e verifique `resolved: true`. Não resolva threads que não procedem apenas por ter publicado a justificativa, nem threads cuja correção, commit, push ou resposta tenha falhado. Informe quais threads receberam resposta e foram resolvidas, seus respectivos hashes quando houver correção, e quaisquer threads deliberadamente ignoradas ou mantidas abertas.
+Após cada publicação, recarregue as discussões e confirme que a resposta está na thread certa. Para uma thread procedente, só a resolva depois de confirmar que a correção foi commitada, enviada e respondida:
 
-Se houver ambiguidade material sobre quais comentários responder, sobre a mensagem a publicar, ou sobre a aprovação do plano, apresente o resumo das threads relevantes e peça orientação antes de agir.
+```bash
+glab mr note list "$mr_iid" --state all --output json
+glab mr note resolve "$mr_iid" "$discussion_id"
+glab mr note list "$mr_iid" --state unresolved --output json
+```
+
+A última consulta não deve conter uma thread que foi resolvida. Se ainda aparecer, pare e informe a falha; não repita a resolução automaticamente. Não resolva threads que não procedem apenas por ter publicado uma justificativa, nem threads cuja correção, commit, push ou resposta tenha falhado.
+
+Informe quais threads receberam resposta e quais foram resolvidas, os hashes das correções e quaisquer threads deliberadamente mantidas abertas. Se houver ambiguidade material sobre os comentários, a mensagem a publicar ou a aprovação do plano, apresente o resumo relevante e peça orientação antes de agir.
