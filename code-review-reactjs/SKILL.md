@@ -103,9 +103,7 @@ import { CreateCropUseCase } from '@core/modules/crop/application/create.use.cas
 
 ## Naming
 
-- Types com prefixo `T`.
-- Interfaces com prefixo `I`.
-- Enums com prefixo `E`.
+- Exigir que todo alias `type` novo ou alterado comece com `T`, toda `interface` nova ou alterada comece com `I` e todo `enum` novo ou alterado comece com `E`, sempre seguidos de PascalCase. Exemplos válidos: `type TFilters`, `interface IFiltersProps` e `enum EFilterStatus`. Comentar cada declaração do diff que não cumprir a convenção, inclusive contratos, DTOs, props e tipos auxiliares.
 - Use cases em arquivo kebab-case e classe derivada exatamente do arquivo: remova `.use.case.ts`, converta os segmentos para PascalCase e acrescente `UseCase` (`get-status.use.case.ts` → `GetStatusUseCase`).
 - Componentes em `PascalCase.tsx`.
 - Hooks em `useNome.tsx`.

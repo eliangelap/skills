@@ -94,9 +94,7 @@ Comentar quando houver:
 
 ## Validar Naming e Contratos
 
-- Tipos com prefixo `T`.
-- Interfaces com prefixo `I`.
-- Enums com prefixo `E`.
+- Exigir que todo alias `type` novo ou alterado comece com `T`, toda `interface` nova ou alterada comece com `I` e todo `enum` novo ou alterado comece com `E`, sempre seguidos de PascalCase. Exemplos válidos: `type TCreateOrderInput`, `interface IOrderGateway` e `enum EOrderStatus`. Comentar cada declaração do diff que não cumprir a convenção, inclusive contratos, DTOs, props e tipos auxiliares.
 - Arquivos de use case em kebab-case e classe derivada exatamente do arquivo: remova `.use.case.ts`, converta os segmentos para PascalCase e acrescente `UseCase` (`get-status.use.case.ts` → `GetStatusUseCase`).
 - Verificar se nomes de classes, DTOs, gateways, services e use cases correspondem fielmente a funcionalidade real implementada.
 - Quando uma classe nova ou alterada tiver nome impreciso, generico ou enganoso para o comportamento presente no diff, comentar e sugerir um nome mais aderente.
